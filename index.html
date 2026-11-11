@@ -1,0 +1,737 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="description" content="Rebecca's Mystery — Uma experiência narrativa de investigação psicológica, manipulação e segredos na Academia Saint Claire.">
+  <meta name="theme-color" content="#2B1923">
+  <title>Rebecca's Mystery — Academia Saint Claire</title>
+
+  <!-- Favicon Oficial RM -->
+  <link rel="icon" type="image/svg+xml" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><circle cx='50' cy='50' r='46' fill='%231a0612' stroke='%23D94689' stroke-width='6'/><text x='50' y='64' font-family='Georgia,serif' font-size='42' font-weight='bold' fill='%23D94689' text-anchor='middle'>RM</text></svg>">
+
+  <!-- Folhas de Estilo -->
+  <link rel="stylesheet" href="assets/css/variables.css">
+  <link rel="stylesheet" href="assets/css/style.css">
+
+  <!-- Script inline anti-flicker de tema (executa antes da renderização) -->
+  <script>
+    (function() {
+      try {
+        const savedTheme = localStorage.getItem("rm_theme");
+        if (savedTheme === "dark" || (!savedTheme && window.matchMedia && window.matchMedia("(prefers-color-scheme: dark)").matches)) {
+          document.documentElement.setAttribute("data-theme", "dark");
+        } else {
+          document.documentElement.setAttribute("data-theme", "light");
+        }
+      } catch (e) {
+        document.documentElement.setAttribute("data-theme", "light");
+      }
+    })();
+  </script>
+</head>
+<body>
+
+  <!-- ==========================================================================
+       ABERTURA CINEMATOGRÁFICA (PRELOADER COM TEMPO OTIMIZADO)
+       ========================================================================== -->
+  <div class="cinema-intro" id="cinema-intro" aria-hidden="true">
+    <div class="intro-backdrop"></div>
+    <div class="intro-content">
+      <div class="intro-crest">
+        <svg viewBox="0 0 24 24">
+          <path d="M12 2L4 6v6c0 5.55 3.84 10.74 8 12 4.16-1.26 8-6.45 8-12V6l-8-4zm0 3.3a2.5 2.5 0 1 1 0 5 2.5 2.5 0 0 1 0-5zm0 13.5c-2.2-1.05-4.2-3.6-4.9-6.8h9.8c-.7 3.2-2.7 5.75-4.9 6.8z"/>
+        </svg>
+      </div>
+      <span class="intro-tag">Arquivo Confidencial SC-104</span>
+      <h2 class="intro-title">Rebecca’s Mystery</h2>
+      <div class="intro-quote">“Meninas apoiam meninas. Pelo menos, é o que dizem.”</div>
+      <div class="intro-loading-line">
+        <div class="intro-loading-bar"></div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Granulação Cinematográfica Sutil -->
+  <div class="film-grain" aria-hidden="true"></div>
+
+  <!-- ==========================================================================
+       HEADER DE NAVEGAÇÃO EQUILIBRADO E PROFISSIONAL (PROMPT 07)
+       ========================================================================== -->
+  <header class="site-header" id="main-header">
+    <div class="container nav-container">
+      
+      <!-- Marca Oficial RM Saint Claire -->
+      <a href="#inicio" class="site-brand" aria-label="Rebecca's Mystery - Página inicial">
+        <div class="brand-crest" aria-hidden="true">
+          <svg viewBox="0 0 24 24">
+            <path d="M12 2L4 6v6c0 5.55 3.84 10.74 8 12 4.16-1.26 8-6.45 8-12V6l-8-4zm0 3.3a2.5 2.5 0 1 1 0 5 2.5 2.5 0 0 1 0-5zm0 13.5c-2.2-1.05-4.2-3.6-4.9-6.8h9.8c-.7 3.2-2.7 5.75-4.9 6.8z"/>
+          </svg>
+        </div>
+        <div class="brand-text">
+          <span class="brand-title">Rebecca’s Mystery</span>
+          <span class="brand-sub">Academia Saint Claire</span>
+        </div>
+      </a>
+
+      <!-- Menu Principal com flex, gap equilibrado e fontes ajustadas -->
+      <nav class="main-nav" aria-label="Navegação principal">
+        <ul class="nav-menu" id="nav-menu">
+          <li><a href="#inicio" class="nav-link active">Início</a></li>
+          <li><a href="#sobre" class="nav-link">O Enigma</a></li>
+          <li><a href="#dossie-secreto" class="nav-link">Dossiê</a></li>
+          <li><a href="#personagens" class="nav-link">Investigação</a></li>
+          <li><a href="#conscientizacao" class="nav-link">Apoio</a></li>
+          <li><a href="#jogar" class="nav-link nav-link--cta">Jogar</a></li>
+        </ul>
+      </nav>
+
+      <!-- Ações: Alternador de Tema (Modo Claro / Escuro), Áudio, Modo Reduzido e Menu Mobile -->
+      <div class="nav-actions">
+        <!-- Botão de Alternância de Tema (Prompt 08) -->
+        <button type="button" class="btn-icon-toggle btn-theme-toggle" id="theme-toggle-btn" aria-label="Alternar para modo escuro" title="Alternar tema visual" aria-live="polite">
+          <!-- Ícone Sol (Modo Claro ativo -> clique para ativar Modo Escuro) -->
+          <svg class="icon-sun" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+            <circle cx="12" cy="12" r="5"></circle>
+            <line x1="12" y1="1" x2="12" y2="3"></line>
+            <line x1="12" y1="21" x2="12" y2="23"></line>
+            <line x1="4.22" y1="4.22" x2="5.64" y2="5.64"></line>
+            <line x1="18.36" y1="18.36" x2="19.78" y2="19.78"></line>
+            <line x1="1" y1="12" x2="3" y2="12"></line>
+            <line x1="21" y1="12" x2="23" y2="12"></line>
+            <line x1="4.22" y1="19.78" x2="5.64" y2="18.36"></line>
+            <line x1="18.36" y1="5.64" x2="19.78" y2="4.22"></line>
+          </svg>
+          <!-- Ícone Lua (Modo Escuro ativo -> clique para ativar Modo Claro) -->
+          <svg class="icon-moon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+            <path d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z"></path>
+          </svg>
+        </button>
+
+        <button type="button" class="btn-icon-toggle" id="audio-toggle-btn" aria-label="Alternar trilha atmosférica" title="Trilha sonora">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+            <polygon points="11 5 6 9 2 9 2 15 6 15 11 19 11 5"></polygon>
+            <path d="M19.07 4.93a10 10 0 0 1 0 14.14M15.54 8.46a5 5 0 0 1 0 7.07"></path>
+          </svg>
+        </button>
+
+        <button type="button" class="btn-icon-toggle" id="motion-toggle-btn" aria-label="Alternar animações reduzidas" title="Reduzir movimento">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+            <circle cx="12" cy="12" r="10"></circle>
+            <line x1="4.93" y1="4.93" x2="19.07" y2="19.07"></line>
+          </svg>
+        </button>
+
+        <button type="button" class="mobile-toggle" id="mobile-menu-toggle" aria-expanded="false" aria-controls="nav-menu" aria-label="Abrir menu de navegação">
+          <span class="hamburger-line"></span>
+        </button>
+      </div>
+
+    </div>
+  </header>
+
+  <main id="main-content">
+
+    <!-- ==========================================================================
+         SEÇÃO 1 — HERO SECTION (ORGANIZADA, TEXTOS CONCISOS, COMPOSIÇÃO EDITORIAL)
+         ========================================================================== -->
+    <section class="section-hero-ref" id="inicio">
+      
+      <!-- Formas de Estrelas Discretas e Métricas no Fundo -->
+      <div class="ref-shape ref-star-1" aria-hidden="true">★</div>
+      <div class="ref-shape ref-star-2" aria-hidden="true">✦</div>
+      <div class="ref-shape ref-star-3" aria-hidden="true">★</div>
+      <div class="ref-badge-metric ref-metric-top">SC-104 &bull; 3 Semanas</div>
+      <div class="ref-badge-metric ref-metric-right">Arquivo Temporal</div>
+
+      <div class="container ref-hero-grid">
+        
+        <!-- Coluna Esquerda: Texto Conciso e Tipografia Equilibrada -->
+        <div class="ref-hero-text-col">
+          
+          <div class="ref-lead-tag">
+            <span>Dossiê Escolar</span>
+            <span class="ref-tag-pill">Saint Claire</span>
+          </div>
+
+          <h1 class="ref-hero-title">
+            O segredo de <br>
+            <span class="ref-title-box">Saint Claire</span>
+          </h1>
+
+          <p class="ref-headline-banner">
+            O silêncio <span class="ref-highlight-dark">oculta</span> o destino de <span class="ref-highlight-pink">Melissa</span>.
+          </p>
+
+          <p class="ref-hero-desc">
+            Rebecca acorda três semanas no passado. Entre boatos anônimos e alianças frágeis, cada escolha pode romper o ciclo antes do desfecho.
+          </p>
+
+          <div class="ref-hero-action-row">
+            <a href="#sobre" class="ref-btn-pill ref-btn-pill--dark">
+              <span>Investigar o Enigma</span>
+              <span class="ref-btn-icon">✦</span>
+            </a>
+          </div>
+
+          <span class="ref-hero-footnote">(Você tem 3 semanas para intervir)</span>
+
+        </div>
+
+        <!-- Coluna Direita: Imagem Recortada com Cards Flutuantes Proporcionais -->
+        <div class="ref-hero-visual-col">
+          <div class="ref-backdrop-card"></div>
+
+          <div class="ref-hero-portrait-frame">
+            <img src="assets/images/characters/melissa.jpg" 
+                 alt="Protagonista Melissa diante dos arquivos da Academia Saint Claire" 
+                 class="ref-hero-img-main">
+          </div>
+
+          <div class="ref-float-card ref-float-card--building">
+            <img src="assets/images/saint_claire_hero.jpg" alt="Academia Saint Claire" class="ref-float-thumb">
+            <div class="ref-float-info">
+              <strong>Saint Claire</strong>
+              <span>Ala Leste &bull; 08:45</span>
+            </div>
+          </div>
+
+          <div class="ref-float-card ref-float-card--rebecca">
+            <img src="assets/images/characters/rebecca.jpg" alt="Rebecca" class="ref-float-thumb">
+            <div class="ref-float-info">
+              <strong>Melissa</strong>
+              <span>Alvo de boatos</span>
+            </div>
+          </div>
+        </div>
+
+      </div>
+
+      <!-- Faixa Marquee Editorial Compacta -->
+      <div class="ref-marquee-strip" aria-hidden="true">
+        <div class="ref-marquee-inner">
+          <span>MENINAS APOIAM MENINAS?</span>
+          <span class="ref-bullet">&bull;</span>
+          <span>ARQUIVO SC-104</span>
+          <span class="ref-bullet">&bull;</span>
+          <span>A VERDADE NÃO ECOA NO SILÊNCIO</span>
+          <span class="ref-bullet">&bull;</span>
+          <span>O TEMPO ESTÁ CORRENDO</span>
+          <span class="ref-bullet">&bull;</span>
+          <span>ACADEMIA SAINT CLAIRE</span>
+          <span class="ref-bullet">&bull;</span>
+          <span>MENINAS APOIAM MENINAS?</span>
+          <span class="ref-bullet">&bull;</span>
+          <span>ARQUIVO SC-104</span>
+          <span class="ref-bullet">&bull;</span>
+          <span>A VERDADE NÃO ECOA NO SILÊNCIO</span>
+          <span class="ref-bullet">&bull;</span>
+        </div>
+      </div>
+
+    </section>
+
+
+    <!-- ==========================================================================
+         SEÇÃO 2 — SEÇÃO COLORIDA (FUNDO ROSA, 6 TÓPICOS OBJETIVOS E CLAROS)
+         ========================================================================== -->
+    <section class="section-pink-showcase" id="sobre">
+      
+      <div class="pink-bg-star pink-star-left" aria-hidden="true">★</div>
+      <div class="pink-bg-star pink-star-right" aria-hidden="true">✦</div>
+      <div class="pink-watermark-text" aria-hidden="true">SAINT CLAIRE &bull; A VERDADE OCULTA</div>
+
+      <div class="container pink-grid-container">
+        
+        <!-- Coluna Esquerda: Cluster Visual Proporcional -->
+        <div class="pink-visual-col">
+          <div class="pink-portrait-cluster">
+            <img src="assets/images/characters/beatrice.jpg" 
+                 alt="Beatrice nos corredores da academia" 
+                 class="pink-main-portrait">
+
+            <div class="pink-phone-card">
+              <div class="phone-card-header">
+                <span class="phone-dot"></span>
+                <span class="phone-user">@confissoes_sc</span>
+              </div>
+              <div class="phone-card-body">
+                <p>“Quem estava no banheiro da ala leste? Ninguém quis se aproximar...”</p>
+                <div class="phone-tags">
+                  <span class="phone-tag">#boato</span>
+                  <span class="phone-tag">#silencio</span>
+                </div>
+              </div>
+            </div>
+
+            <div class="pink-sticker-note">
+              <span>✦ Registro SC-104</span>
+            </div>
+          </div>
+        </div>
+
+        <!-- Coluna Direita: Título de Seção Adequado e 6 Tópicos Concisos -->
+        <div class="pink-content-col">
+          <h2 class="pink-section-title">
+            O que as paredes de Saint Claire escondem:
+          </h2>
+
+          <div class="pink-topics-list">
+            
+            <div class="pink-topic-item reveal">
+              <span class="pink-topic-num">01</span>
+              <div class="pink-topic-text">
+                <strong>Pacto de Silêncio</strong>
+                <p>Ninguém escuta quando todos fingem perfeição para proteger aparências.</p>
+              </div>
+            </div>
+
+            <div class="pink-topic-item reveal">
+              <span class="pink-topic-num">02</span>
+              <div class="pink-topic-text">
+                <strong>Exclusão Sutil</strong>
+                <p>Começa com risos abafados, cadeiras afastadas e olhares cúmplices.</p>
+              </div>
+            </div>
+
+            <div class="pink-topic-item reveal">
+              <span class="pink-topic-num">03</span>
+              <div class="pink-topic-text">
+                <strong>Redes e Fofocas</strong>
+                <p>Prints anônimos e bilhetes circulam antes da primeira aula terminar.</p>
+              </div>
+            </div>
+
+            <div class="pink-topic-item reveal">
+              <span class="pink-topic-num">04</span>
+              <div class="pink-topic-text">
+                <strong>Retorno no Tempo</strong>
+                <p>Melissa voltou 3 semanas. Catalogar cada detalhe é a chave da história.</p>
+              </div>
+            </div>
+
+            <div class="pink-topic-item reveal">
+              <span class="pink-topic-num">05</span>
+              <div class="pink-topic-text">
+                <strong>A Farsa da Sororidade</strong>
+                <p>O lema oficial serve de escudo para acobertar a covardia dos corredores.</p>
+              </div>
+            </div>
+
+            <div class="pink-topic-item reveal">
+              <span class="pink-topic-num">06</span>
+              <div class="pink-topic-text">
+                <strong>O Papel da Testemunha</strong>
+                <p>Quem cala consente. Romper a cadeia exige posicionamento ativo.</p>
+              </div>
+            </div>
+
+          </div>
+        </div>
+
+      </div>
+    </section>
+
+
+    <!-- ==========================================================================
+         SEÇÃO 3 — GRANDE PAINEL PRETO SOBREPOSTO (EQUILIBRADO E COM AR DE RESPIRO)
+         ========================================================================== -->
+    <section class="section-overlap-panel-wrapper" id="dossie-secreto">
+      <div class="container">
+        
+        <div class="ref-big-dark-panel reveal">
+          <div class="dark-panel-flower-badge" aria-hidden="true">✦</div>
+
+          <div class="dark-panel-grid">
+            
+            <!-- Lado Esquerdo: Card de Evidência com Espaçamento Limpo -->
+            <div class="dark-panel-doc-col">
+              <div class="doc-card-white">
+                <span class="doc-postit-tag">Evidência Material</span>
+                
+                <div class="doc-inner-content">
+                  <div class="doc-photo-wrap">
+                    <img src="assets/images/investigation_desk.jpg" alt="Mesa de investigação com cartas e diário" class="doc-photo-img">
+                  </div>
+                  <div class="doc-lines">
+                    <span class="doc-meta-id">SC-104 &bull; DIA 17</span>
+                    <h4>Bilhete Rasgado:</h4>
+                    <p>“Se você contar para a diretoria, ninguém vai acreditar em você.”</p>
+                  </div>
+                </div>
+
+                <div class="doc-annotation-circle" aria-hidden="true">
+                  <span>3 Semanas Restantes</span>
+                  <svg class="hand-drawn-arrow" viewBox="0 0 80 40">
+                    <path d="M10,35 Q40,5 70,25" fill="none" stroke="currentColor" stroke-width="2.5" stroke-dasharray="3,3"/>
+                    <polygon points="70,25 60,20 63,28" fill="currentColor"/>
+                  </svg>
+                </div>
+              </div>
+            </div>
+
+            <!-- Lado Direito: Frases de Alto Impacto sem Textos Extensos -->
+            <div class="dark-panel-text-col">
+              <div class="panel-eyebrow-pill">
+                <span>O Conflito Central</span>
+              </div>
+
+              <p class="panel-statement-lead">
+                A tragédia não foi um acidente repentino. Foi construída dia após dia, diante dos olhos de quem preferiu não agir.
+              </p>
+
+              <h3 class="panel-impact-headline">
+                O silêncio mais destrutivo é aquele que <span class="text-pill-pink">ninguém</span> teve coragem de <span class="text-pill-white">romper</span>.
+              </h3>
+
+              <div class="panel-tag-badges">
+                <span class="dark-badge dark-badge--pink">Pistas limitadas</span>
+                <span class="dark-badge">Escolhas éticas</span>
+              </div>
+
+              <div class="panel-handwritten-note">
+                — Do diário de bolso de Melissa.
+              </div>
+            </div>
+
+          </div>
+        </div>
+
+      </div>
+    </section>
+
+
+    <!-- ==========================================================================
+         SEÇÃO 4 — SEÇÃO DE INVESTIGAÇÃO (CARDS DAS PERSONAGENS & MOCKUP)
+         ========================================================================== -->
+    <section class="section-investigation-phone" id="personagens">
+      <div class="container">
+        
+        <div class="investigation-grid">
+          
+          <!-- Lado Esquerdo: Metodologia e Mini-Dossiês Objetivos -->
+          <div class="investigation-text-col">
+            <span class="ref-lead-tag">Mecanismos</span>
+            
+            <h2 class="investigation-title">
+              Investigue em <span class="ref-highlight-pink">4 passos</span>
+            </h2>
+
+            <p class="investigation-desc">
+              Cada aluna guarda motivações e segredos. Transite pelas camadas de Saint Claire para revelar a verdade:
+            </p>
+
+            <div class="investigation-pills-row">
+              <span class="inv-pill inv-pill--active">1. Observar</span>
+              <span class="inv-pill">2. Confrontar</span>
+              <span class="inv-pill">3. Acolher</span>
+              <span class="inv-pill">4. Decidir</span>
+            </div>
+
+            <!-- Lista de Cards Injetada Dinamicamente -->
+            <div class="chars-mini-dossier-list" id="characters-grid">
+              <!-- Renderizado via assets/js/characters.js -->
+            </div>
+          </div>
+
+          <!-- Lado Direito: Celular Proporcional com Balões de Chat -->
+          <div class="investigation-phone-col">
+            <div class="school-phone-device reveal">
+              <div class="phone-screen-header">
+                <span>08:14</span>
+                <div class="phone-camera-notch"></div>
+                <span>SC-NET</span>
+              </div>
+
+              <div class="phone-screen-content">
+                <div class="phone-profile-bar">
+                  <div class="phone-avatar">
+                    <img src="assets/images/characters/melissa.jpg" alt="Melissa">
+                  </div>
+                  <div>
+                    <strong>Melissa</strong>
+                    <small>Turma 3º B &bull; Online</small>
+                  </div>
+                </div>
+
+                <div class="phone-notifications-stack">
+                  <div class="phone-bubble phone-bubble--received">
+                    <span class="bubble-sender">Desconhecida:</span>
+                    <p>“Se você falar dos bilhetes do armário, vai se arrepender...”</p>
+                  </div>
+
+                  <div class="phone-bubble phone-bubble--sent">
+                    <p>“O que vocês fizeram com a Rebecca?”</p>
+                  </div>
+
+                  <div class="phone-bubble phone-bubble--received">
+                    <span class="bubble-sender">Beatrice:</span>
+                    <p>“Melissa, não se meta. A turma precisa focar nos exames.”</p>
+                  </div>
+                </div>
+
+                <div class="phone-evidence-stamp">
+                  <span>EVIDÊNCIA #04 &bull; GRAVADA</span>
+                </div>
+              </div>
+
+              <div class="phone-callout-tag phone-callout--top">
+                <span>✦ Quem enviou o bilhete?</span>
+              </div>
+              <div class="phone-callout-tag phone-callout--bottom">
+                <span>✦ O tempo está acabando</span>
+              </div>
+            </div>
+          </div>
+
+        </div>
+
+      </div>
+    </section>
+
+
+    <!-- ==========================================================================
+         SEÇÃO 5 — CONSCIENTIZAÇÃO & RELATOS (TRANSIÇÃO ORGÂNICA DE RASGO)
+         ========================================================================== -->
+    <section class="section-pink-evidence" id="conscientizacao">
+      <div class="torn-paper-edge" aria-hidden="true"></div>
+
+      <div class="container">
+        
+        <div class="evidence-top-avatars">
+          <div class="avatar-stack">
+            <img src="assets/images/characters/melissa.jpg" alt="Melissa">
+            <img src="assets/images/characters/rebecca.jpg" alt="Rebecca">
+            <img src="assets/images/characters/beatrice.jpg" alt="Beatrice">
+          </div>
+        </div>
+
+        <div class="evidence-header-block reveal">
+          <p class="evidence-lead-phrase">
+            O jogo é um alerta urgente sobre o que acontece ao ignorarmos a dor de quem está ao lado.
+          </p>
+          <h2 class="evidence-main-banner">
+            A omissão de quem assiste <span class="ref-highlight-dark">fere tanto</span> quanto quem agride.
+          </h2>
+        </div>
+
+        <!-- 4 Cards Objetivos e Bem Espaçados -->
+        <div class="evidence-cards-carousel">
+          
+          <div class="chat-evidence-card reveal">
+            <div class="chat-card-top">
+              <div class="chat-icon">✦</div>
+              <strong>Exclusão Velada</strong>
+            </div>
+            <div class="chat-bubble-content">
+              “Ninguém falou abertamente. Só me deixaram de fora dos grupos. Ficar invisível dói fundo.”
+            </div>
+            <div class="chat-tag">Registro Escolar</div>
+          </div>
+
+          <div class="chat-evidence-card reveal">
+            <div class="chat-card-top">
+              <div class="chat-icon">✦</div>
+              <strong>Boatos Rápidos</strong>
+            </div>
+            <div class="chat-bubble-content">
+              “Inventaram a mentira em minutos e ela se espalhou pelo colégio sem chance de defesa.”
+            </div>
+            <div class="chat-tag">Relato de Aluna</div>
+          </div>
+
+          <div class="chat-evidence-card reveal">
+            <div class="chat-card-top">
+              <div class="chat-icon">✦</div>
+              <strong>O Espectador</strong>
+            </div>
+            <div class="chat-bubble-content">
+              “Eu vi tudo e fiquei com medo de defender e virar o próximo alvo. Esse silêncio pesa.”
+            </div>
+            <div class="chat-tag">Consciência Ativa</div>
+          </div>
+
+          <div class="chat-evidence-card reveal">
+            <div class="chat-card-top">
+              <div class="chat-icon">✦</div>
+              <strong>Acolhimento Real</strong>
+            </div>
+            <div class="chat-bubble-content">
+              “Uma única pessoa que puxou assunto e perguntou se eu estava bem fez toda a diferença.”
+            </div>
+            <div class="chat-tag">Apoio Solidário</div>
+          </div>
+
+        </div>
+
+        <!-- Barra de Ajuda Limpa e Alinhada -->
+        <div class="evidence-help-bar reveal">
+          <div class="help-bar-text">
+            <strong>Você não precisa enfrentar isso sozinha.</strong>
+            <span>Canais gratuitos, confidenciais e disponíveis 24h por dia:</span>
+          </div>
+          <div class="help-bar-actions">
+            <a href="tel:188" class="ref-btn-pill ref-btn-pill--dark">
+              <span>Disque 188 &bull; CVV</span>
+            </a>
+            <a href="tel:100" class="ref-btn-pill ref-btn-pill--white">
+              <span>Disque 100 &bull; Direitos</span>
+            </a>
+          </div>
+        </div>
+
+      </div>
+    </section>
+
+
+    <!-- ==========================================================================
+         SEÇÃO 6 — JOGAR AGORA (CLÍMAX COM PROPORÇÃO REFINADA)
+         ========================================================================== -->
+    <section class="section-play-final" id="jogar">
+      <div class="container">
+        
+        <div class="play-card-banner reveal">
+          <div class="play-backdrop-visual">
+            <img src="assets/images/play_visual.jpg" alt="Biblioteca de Saint Claire">
+            <div class="play-backdrop-overlay"></div>
+          </div>
+
+          <div class="play-card-inner">
+            <span class="ref-lead-tag" style="margin-bottom: var(--space-xs);">Acesso Oficial</span>
+            
+            <h2 class="play-title-ref">
+              Adentre a Academia <br>
+              <span class="ref-highlight-pink">Saint Claire</span>
+            </h2>
+
+            <p class="play-desc-ref">
+              Suas escolhas definem o destino de Rebecca e a coragem de romper o silêncio.
+            </p>
+
+            <div class="play-badges-row">
+              <span class="spec-pill">Mistério Psicológico</span>
+              <span class="spec-pill">Português (BR)</span>
+              <span class="spec-pill">PC & WebGL</span>
+            </div>
+
+            <div class="play-btn-cluster">
+              <button type="button" class="ref-btn-pill ref-btn-pill--pink btn-play-large" id="btn-play-action">
+                <span>Jogar Rebecca’s Mystery</span>
+                <span class="ref-btn-icon">▶</span>
+              </button>
+              <small class="play-notice-text">* Experiência interativa narrativa criada por Bianca Amorim.</small>
+            </div>
+          </div>
+        </div>
+
+      </div>
+    </section>
+
+  </main>
+
+
+  <!-- ==========================================================================
+       RODAPÉ EDITORIAL ORGANIZADO E AREJADO (PROMPT 07)
+       ========================================================================== -->
+  <footer class="site-footer" id="rodape">
+    <div class="container">
+      
+      <div class="footer-grid">
+        
+        <div class="footer-brand">
+          <div class="site-brand" style="margin-bottom: var(--space-sm);">
+            <div class="brand-crest" aria-hidden="true">
+              <svg viewBox="0 0 24 24">
+                <path d="M12 2L4 6v6c0 5.55 3.84 10.74 8 12 4.16-1.26 8-6.45 8-12V6l-8-4z"/>
+              </svg>
+            </div>
+            <div class="brand-text">
+              <span class="brand-title">Rebecca’s Mystery</span>
+              <span class="brand-sub">Academia Saint Claire</span>
+            </div>
+          </div>
+          <p class="footer-motto">“A verdade não ecoa no silêncio dos corredores.”</p>
+          <p style="font-size: var(--font-size-aux); color: var(--text-light-faint);">
+            Projeto e Desenvolvimento por <strong>Bianca Amorim e Equipe</strong>.
+          </p>
+        </div>
+
+        <div class="footer-nav">
+          <h5>Navegação</h5>
+          <ul class="footer-links">
+            <li><a href="#inicio">Início</a></li>
+            <li><a href="#sobre">O Enigma</a></li>
+            <li><a href="#dossie-secreto">Dossiê</a></li>
+            <li><a href="#personagens">Investigação</a></li>
+            <li><a href="#conscientizacao">Apoio</a></li>
+            <li><a href="#jogar">Jogar</a></li>
+          </ul>
+        </div>
+
+        <div class="footer-credits">
+          <h5>Informações</h5>
+          <p style="font-size: var(--font-size-aux); color: var(--text-light-muted); line-height: 1.6;">
+            Projeto educativo e de conscientização sobre o combate ao bullying escolar e acolhimento emocional.
+          </p>
+          <p style="font-size: var(--font-size-aux); color: var(--text-light-faint); margin-top: var(--space-md);">
+            &copy; 2026 Rebecca's Mystery &bull; Todos os direitos reservados.
+          </p>
+        </div>
+
+      </div>
+
+    </div>
+  </footer>
+
+
+  <!-- ==========================================================================
+       MODAIS INTERATIVOS ACESSÍVEIS
+       ========================================================================== -->
+
+  <!-- Modal do Dossiê de Personagem -->
+  <div class="modal-overlay" id="dossier-modal" role="dialog" aria-modal="true" aria-labelledby="modal-dossier-title">
+    <div class="modal-window">
+      <div class="modal-header">
+        <h4 id="modal-dossier-title">Dossiê Confidencial</h4>
+        <button type="button" class="modal-close-btn" id="dossier-modal-close" aria-label="Fechar dossiê">✕</button>
+      </div>
+      <div class="modal-body" id="modal-dossier-content"></div>
+    </div>
+  </div>
+
+  <!-- Modal de Jogar -->
+  <div class="modal-overlay" id="play-modal" role="dialog" aria-modal="true" aria-labelledby="modal-play-title">
+    <div class="modal-window">
+      <div class="modal-header">
+        <h4 id="modal-play-title">Acesso ao Jogo</h4>
+        <button type="button" class="modal-close-btn" id="play-modal-close" aria-label="Fechar janela">✕</button>
+      </div>
+      <div class="modal-body">
+        <div style="text-align: center; margin-bottom: var(--space-md);">
+          <span class="ref-tag-pill" style="margin-bottom: 8px; display: inline-block;">Build Executável Ativa</span>
+          <h3 style="font-size: var(--font-size-h3); color: var(--text-light-primary); margin-bottom: 6px;">Universo Saint Claire</h3>
+          <p style="font-size: var(--font-size-body); color: var(--text-light-muted); line-height: 1.5;">
+            A experiência de <strong>Rebecca’s Mystery</strong> (por <strong>Bianca Amorim</strong>) conduz o jogador por investigações morais e ramificações temporais.
+          </p>
+        </div>
+        <div style="background: rgba(38, 12, 29, 0.45); border: 1px solid rgba(255, 255, 255, 0.15); border-radius: var(--radius-md); padding: var(--space-md); margin-bottom: var(--space-md);">
+          <h5 style="font-family: var(--font-display); font-size: 0.75rem; color: var(--color-rose-aged); text-transform: uppercase; letter-spacing: 0.14em; margin-bottom: 6px;">Instrução de Integração:</h5>
+          <p style="font-size: var(--font-size-aux); color: var(--text-light-muted); line-height: 1.5; margin-bottom: 0;">
+            O botão <strong>#btn-play-action</strong> está pronto para conectar diretamente à build do jogo (Itch.io, Steam, WebGL ou executável).
+          </p>
+        </div>
+        <div style="display: flex; justify-content: center;">
+          <button type="button" class="ref-btn-pill ref-btn-pill--dark" onclick="document.getElementById('play-modal').classList.remove('open'); document.body.style.overflow = '';">
+            Continuar Explorando
+          </button>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Scripts -->
+  <script src="assets/js/audio.js"></script>
+  <script src="assets/js/characters.js"></script>
+  <script src="assets/js/main.js"></script>
+</body>
+</html>

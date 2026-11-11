@@ -1,0 +1,205 @@
+/* ==========================================================================
+   REBECCA'S MYSTERY — DESIGN SYSTEM & CSS VARIABLES (PROMPT 09 - REFINAMENTO DA PALETA)
+   Substituição integral de tons rosa pink neon por uma identidade cromática
+   sofisticada, madura e editorial:
+   - Modo Claro: Creme (#F7F0EF), Rose (#F2E7E9), Malva (#966477), Rose Antigo (#C18B9D), Bordo (#622D45)
+   - Modo Escuro: Fundo (#160F14), Secundario (#21151D), Superficies (#281A24), Malva (#A87589), Bordo (#773D57)
+   ========================================================================== */
+
+:root {
+  /* ==========================================================================
+     TEMA CLARO (LIGHT MODE) — REFINADO & EDITORIAL
+     ========================================================================== */
+  --theme-name: 'light';
+
+  /* --- Cores Base & Fundos --- */
+  --bg-primary: #F7F0EF;               /* Fundo principal claro e sofisticado */
+  --bg-secondary: #F2E7E9;             /* Fundo secundário rosado suave */
+  --bg-tertiary: #E9D5DB;              /* Rosa pálido / transição */
+  --bg-overlay: rgba(43, 25, 35, 0.72);
+
+  /* --- Fundos das Seções Alternadas --- */
+  --bg-section-light: #F7F0EF;
+  --bg-section-pink: #A06D80;          /* Malva/rosé antigo para a 2ª seção */
+  --bg-section-pink-deep: #875468;     /* Degradê elegante e maduro */
+  --bg-panel-dark: #2B1923;            /* Painel central em bordô profundo e acolhedor */
+  --bg-card: #FFFFFF;                  /* Superfícies brancas puras */
+  --bg-card-subtle: #F5EBEE;           /* Superfícies secundárias claras */
+  --bg-header: rgba(247, 240, 239, 0.94);
+  --bg-header-scrolled: rgba(255, 255, 255, 0.98);
+  --bg-footer: #22131C;                /* Rodapé escuro discreto */
+
+  /* --- Textos e Tipografia --- */
+  --text-primary: #2B1923;             /* Texto principal em bordô quase preto */
+  --text-secondary: #5C3A4A;           /* Texto secundário em ameixa médio */
+  --text-muted: #8A6475;               /* Texto auxiliar em malva suave */
+  --text-inverse: #FFFFFF;
+  --text-inverse-muted: rgba(255, 255, 255, 0.9);
+  --text-inverse-faint: rgba(255, 255, 255, 0.7);
+
+  /* Legados mantidos para compatibilidade total */
+  --text-dark-primary: var(--text-primary);
+  --text-dark-muted: var(--text-secondary);
+  --text-dark-faint: var(--text-muted);
+  --text-light-primary: var(--text-inverse);
+  --text-light-muted: var(--text-inverse-muted);
+  --text-light-faint: var(--text-inverse-faint);
+
+  /* --- Cores de Marca / Acentos Sofisticados (Zero Neon) --- */
+  --color-bordeaux-deep: #622D45;      /* Bordô oficial refinado */
+  --color-bordeaux-night: #22131C;     /* Noite bordô */
+  --color-bordeaux-darkest: #160F14;
+  --color-pink-vibrant: #A85A75;       /* Rosé queimado maduro (substitui o pink neon) */
+  --color-pink-hero: #C18B9D;          /* Rosé antigo */
+  --color-pink-darker: #7E3E58;        /* Ameixa escuro */
+  --color-rose-aged: #C18B9D;          /* Rosé antigo clássico */
+  --color-rose-light: #E9D5DB;         /* Rosa pálido suave */
+  --color-rose-badge: #EFE2E6;         /* Badge delicada */
+  --color-rose-bright: #B5748B;        /* Ponto de destaque harmonioso */
+
+  /* --- Bordas & Divisórias --- */
+  --border-subtle: rgba(150, 100, 119, 0.2);
+  --border-medium: rgba(150, 100, 119, 0.35);
+  --border-strong: rgba(168, 90, 117, 0.5);
+  --border-panel-dark: rgba(193, 139, 157, 0.3);
+
+  /* --- Pílulas e Destaques Coloridos --- */
+  --pill-bg-pink: #A85A75;             /* Rosé queimado elegante */
+  --pill-text-pink: #FFFFFF;
+  --pill-bg-dark: #2B1923;
+  --pill-text-dark: #FFFFFF;
+  --pill-bg-white: #FFFFFF;
+  --pill-text-white: #2B1923;
+
+  /* --- Elementos Decorativos & Estrelas --- */
+  --star-color: #D9C2C9;
+  --star-opacity: 0.5;
+  --watermark-opacity: 0.05;
+  --backdrop-card-gradient: linear-gradient(135deg, #DEBAC6 0%, #C18B9D 100%);
+  --portrait-border: #FFFFFF;
+  --torn-paper-fill: #A06D80;
+
+  /* --- Sombras (Elegantes e sem brilho colorido) --- */
+  --shadow-sticker: 0 8px 20px rgba(43, 25, 35, 0.08);
+  --shadow-panel-dark: 0 25px 60px rgba(22, 15, 20, 0.35);
+  --shadow-phone: 0 18px 45px rgba(43, 25, 35, 0.18);
+  --shadow-card: 0 8px 22px rgba(43, 25, 35, 0.06);
+
+  /* --- Tipografia Editorial --- */
+  --font-serif: 'Playfair Display', Georgia, serif;
+  --font-display: 'Cinzel', 'Playfair Display', Georgia, serif;
+  --font-sans: 'Plus Jakarta Sans', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+  --font-handwriting: 'Caveat', 'Playfair Display', cursive, serif;
+
+  /* --- Escala Tipográfica Padronizada com clamp() --- */
+  --font-size-h1: clamp(2.2rem, 3.8vw, 3.2rem);
+  --font-size-h2: clamp(1.75rem, 2.6vw, 2.25rem);
+  --font-size-h3: clamp(1.25rem, 1.8vw, 1.55rem);
+  --font-size-body: clamp(0.938rem, 1.1vw, 1.05rem);
+  --font-size-aux: clamp(0.75rem, 0.9vw, 0.875rem);
+  --font-size-nav: clamp(0.688rem, 0.8vw, 0.813rem);
+
+  /* --- Espaçamentos Harmoniosos (Sistema 8pt) --- */
+  --space-2xs: 4px;
+  --space-xs: 8px;
+  --space-sm: 12px;
+  --space-md: 16px;
+  --space-lg: 24px;
+  --space-xl: 32px;
+  --space-2xl: 48px;
+  --space-3xl: 64px;
+  --space-4xl: 80px;
+
+  /* --- Dimensões Globais --- */
+  --container-max: 1180px;
+  --header-height: 72px;
+
+  /* --- Raios de Borda --- */
+  --radius-xs: 4px;
+  --radius-sm: 8px;
+  --radius-md: 12px;
+  --radius-lg: 18px;
+  --radius-xl: 28px;
+  --radius-full: 9999px;
+
+  /* --- Transições --- */
+  --transition-fast: 0.18s cubic-bezier(0.16, 1, 0.3, 1);
+  --transition-normal: 0.3s cubic-bezier(0.16, 1, 0.3, 1);
+  --transition-slow: 0.5s cubic-bezier(0.16, 1, 0.3, 1);
+  --theme-transition: background-color 0.35s ease, color 0.35s ease, border-color 0.35s ease, box-shadow 0.35s ease;
+}
+
+/* ==========================================================================
+   TEMA ESCURO (DARK MODE) — MISTERIOSO, PROFUNDO & SOFISTICADO (SEM NEON)
+   Ativado via [data-theme="dark"] na tag <html> ou <body>
+   ========================================================================== */
+[data-theme="dark"] {
+  --theme-name: 'dark';
+
+  /* --- Cores Base & Neutras --- */
+  --bg-primary: #160F14;               /* Fundo principal profundo */
+  --bg-secondary: #21151D;             /* Fundo secundário em ameixa escuro */
+  --bg-tertiary: #281A24;              /* Superfícies refinadas */
+  --bg-overlay: rgba(14, 9, 12, 0.85);
+
+  /* --- Fundos das Seções Alternadas (Dark Mode) --- */
+  --bg-section-light: #160F14;         /* Hero e seções claras passam a #160F14 */
+  --bg-section-pink: #341D2B;          /* Seção colorida passa a vinho profundo discreto */
+  --bg-section-pink-deep: #25141E;     /* Degradê suave e intimista */
+  --bg-panel-dark: #1E1219;            /* Painel escuro rico com bordas sutis */
+  --bg-card: #281A24;                  /* Cards de fundo sólido suave */
+  --bg-card-subtle: #33202E;           /* Superfícies secundárias de apoio */
+  --bg-header: rgba(22, 15, 20, 0.94); /* Header escuro translúcido */
+  --bg-header-scrolled: rgba(28, 18, 25, 0.98);
+  --bg-footer: #120C10;                /* Rodapé escuro */
+
+  /* --- Textos e Tipografia (Dark Mode) --- */
+  --text-primary: #F3E8EC;             /* Texto principal claro e luminoso */
+  --text-secondary: #C5ADB7;           /* Rosé claro suave para leitura */
+  --text-muted: #947B86;               /* Malva atenuado para metadados */
+  --text-inverse: #160F14;             /* Texto sobre fundos claros */
+  --text-inverse-muted: #2B1923;
+  --text-inverse-faint: #472E3B;
+
+  /* Mantidos para compatibilidade */
+  --text-dark-primary: var(--text-primary);
+  --text-dark-muted: var(--text-secondary);
+  --text-dark-faint: var(--text-muted);
+
+  /* --- Cores de Marca / Acentos Sofisticados (Dark Mode) --- */
+  --color-bordeaux-deep: #F3E8EC;      /* Títulos em tom claro arejado */
+  --color-pink-vibrant: #C17D94;       /* Rosé elegante sem saturação excessiva */
+  --color-pink-hero: #A87589;          /* Malva rosado */
+  --color-pink-darker: #773D57;        /* Bordô suave */
+  --color-rose-bright: #D2A6B4;        /* Rosé claro discreto */
+  --color-rose-badge: #38212F;         /* Badge escura com borda sutil */
+  --color-rose-aged: #C5ADB7;
+
+  /* --- Bordas & Divisórias (Dark Mode) --- */
+  --border-subtle: #513044;
+  --border-medium: #673E57;
+  --border-strong: #8A5274;
+  --border-panel-dark: #513044;
+
+  /* --- Pílulas e Destaques (Dark Mode) --- */
+  --pill-bg-pink: #773D57;             /* Bordô acolhedor para tags */
+  --pill-text-pink: #FFFFFF;
+  --pill-bg-dark: #A87589;             /* Malva rosado suave para contraste */
+  --pill-text-dark: #160F14;
+  --pill-bg-white: #F3E8EC;
+  --pill-text-white: #160F14;
+
+  /* --- Elementos Decorativos & Estrelas (Dark Mode) --- */
+  --star-color: #6A4458;
+  --star-opacity: 0.28;
+  --watermark-opacity: 0.05;
+  --backdrop-card-gradient: linear-gradient(135deg, #422435 0%, #291521 100%);
+  --portrait-border: rgba(210, 166, 180, 0.25);
+  --torn-paper-fill: #341D2B;
+
+  /* --- Sombras (Sem brilho neon) --- */
+  --shadow-sticker: 0 8px 24px rgba(0, 0, 0, 0.4);
+  --shadow-panel-dark: 0 25px 60px rgba(0, 0, 0, 0.65);
+  --shadow-phone: 0 20px 50px rgba(0, 0, 0, 0.6);
+  --shadow-card: 0 10px 25px rgba(0, 0, 0, 0.4);
+}
