@@ -20,31 +20,245 @@ document.addEventListener("DOMContentLoaded", () => {
 });
 
 /* ==========================================================================
-   1. PRELOADER & ABERTURA CINEMATOGRÁFICA (ETAPA 05)
+   1. ABERTURA CINEMATOGRÁFICA COM GSAP DYNAMIC MORPHING (PROMPT 11)
+   Etapa 1: Apresentação da logo Rebecca's Mystery com fade, escala e iluminação sutil.
+   Etapa 2: Dynamic Morphing de cortinas SVG com curvas Bézier orgânicas em 3 camadas,
+            revelando a Hero Section com stagger e continuidade cinematográfica.
    ========================================================================== */
 function initCinemaPreloader() {
   const intro = document.getElementById("cinema-intro");
   if (!intro) return;
 
-  // Se o usuário já solicitou redução de movimento, encerra imediatamente
-  if (window.matchMedia("(prefers-reduced-motion: reduce)").matches || document.body.classList.contains("reduce-motion")) {
-    intro.style.display = "none";
+  const skipBtn = document.getElementById("intro-skip-btn");
+  const logoStage = document.getElementById("intro-logo-stage");
+  const crest = document.getElementById("intro-logo-crest");
+  const tag = document.getElementById("intro-logo-tag");
+  const title = document.getElementById("intro-logo-title");
+  const quote = document.getElementById("intro-logo-quote");
+  const line = document.getElementById("intro-logo-line");
+
+  const path1 = document.getElementById("morph-path-1");
+  const path2 = document.getElementById("morph-path-2");
+  const path3 = document.getElementById("morph-path-3");
+
+  // Hero elements para revelação sequencial
+  const heroTitle = document.querySelector(".ref-hero-title");
+  const heroBadge = document.querySelector(".ref-lead-tag");
+  const heroBanner = document.querySelector(".ref-headline-banner");
+  const heroDesc = document.querySelector(".ref-hero-desc");
+  const heroActions = document.querySelector(".ref-hero-action-row");
+  const heroPortrait = document.querySelector(".ref-hero-portrait-frame");
+  const heroFloatCards = document.querySelectorAll(".ref-float-card");
+
+  // Função para encerrar e remover overlay
+  const completeIntro = () => {
+    document.body.style.overflow = "";
+    intro.classList.add("intro-complete");
+    sessionStorage.setItem("rm_intro_seen", "true");
+    setTimeout(() => {
+      intro.remove();
+    }, 700);
+  };
+
+  // Se o usuário prefere redução de movimento ou já visualizou nesta sessão
+  const prefersReduced = window.matchMedia("(prefers-reduced-motion: reduce)").matches || document.body.classList.contains("reduce-motion");
+  const alreadySeen = sessionStorage.getItem("rm_intro_seen") === "true";
+
+  if (prefersReduced || alreadySeen) {
+    completeIntro();
     return;
   }
 
-  // Previne rolagem enquanto a introdução roda
+  // Previne rolagem durante a abertura
   document.body.style.overflow = "hidden";
 
-  // Transição cinematográfica após 2.2 segundos
-  setTimeout(() => {
-    intro.classList.add("fade-out");
-    document.body.style.overflow = "";
+  // Se o GSAP não estiver disponível por qualquer motivo, fallback gracioso
+  if (typeof gsap === "undefined") {
+    setTimeout(completeIntro, 2200);
+    return;
+  }
 
-    // Remove do DOM após a transição para liberar memória
-    setTimeout(() => {
-      intro.remove();
-    }, 1000);
-  }, 2200);
+  // Listener do botão Pular
+  let mainTl = null;
+  if (skipBtn) {
+    skipBtn.addEventListener("click", () => {
+      if (mainTl) mainTl.kill();
+      gsap.to(intro, {
+        opacity: 0,
+        duration: 0.4,
+        ease: "power2.out",
+        onComplete: completeIntro
+      });
+    });
+  }
+
+  // Estado inicial dos elementos da Hero para revelação coreografada
+  gsap.set([heroBadge, heroTitle, heroBanner, heroDesc, heroActions], {
+    opacity: 0,
+    y: 25
+  });
+  if (heroPortrait) {
+    gsap.set(heroPortrait, { opacity: 0, scale: 0.95, y: 30 });
+  }
+  if (heroFloatCards.length) {
+    gsap.set(heroFloatCards, { opacity: 0, y: 15, scale: 0.9 });
+  }
+
+  // Definição dos caminhos SVG orgânicos para o Dynamic Morphing
+  // viewBox: 0 0 1440 900
+  // Início: Cobrindo toda a tela
+  const fullCover = "M 0 0 L 1440 0 L 1440 900 L 0 900 Z";
+
+  // Morfismo 1: Ondulação fluida intermediária (curva senoidal com ponto de inflexão)
+  const waveShapeA = "M 0 0 L 1440 0 L 1440 450 Q 1080 820 720 520 Q 360 220 0 680 Z";
+  const waveShapeB = "M 0 0 L 1440 0 L 1440 380 Q 1120 180 720 480 Q 320 780 0 540 Z";
+  const waveShapeC = "M 0 0 L 1440 0 L 1440 280 Q 1000 620 720 320 Q 440 80 0 380 Z";
+
+  // Morfismo 2: Retração final orgânica ultrapassando o topo
+  const exitWave = "M 0 0 L 1440 0 L 1440 0 Q 720 -180 0 0 Z";
+
+  // Timeline Master do GSAP
+  mainTl = gsap.timeline({
+    onComplete: completeIntro
+  });
+
+  // ETAPA 1: Apresentação da Logo Original
+  mainTl
+    .set([crest, tag, title, quote, line], { opacity: 0, y: 16 })
+    .to(crest, {
+      opacity: 1,
+      y: 0,
+      scale: 1,
+      duration: 0.8,
+      ease: "power3.out"
+    })
+    .to(
+      [tag, title],
+      {
+        opacity: 1,
+        y: 0,
+        duration: 0.7,
+        stagger: 0.12,
+        ease: "power2.out"
+      },
+      "-=0.4"
+    )
+    .to(
+      [quote, line],
+      {
+        opacity: 1,
+        y: 0,
+        duration: 0.6,
+        stagger: 0.1,
+        ease: "power2.out"
+      },
+      "-=0.3"
+    )
+    .to({}, { duration: 0.9 }) // Pausa contemplativa sofisticada
+    // Saída suave da logo antes do morphing
+    .to(logoStage, {
+      opacity: 0,
+      y: -25,
+      scale: 0.96,
+      duration: 0.6,
+      ease: "power2.in"
+    });
+
+  // ETAPA 2: GSAP Dynamic Morphing das Camadas SVG em Curvas Bézier
+  // Animação das 3 camadas SVG escalonadas (Layer 1, Layer 2, Layer 3)
+  mainTl
+    // Fase 1 do Morphing: Deformação orgânica em ondas fluidas com stagger
+    .to(
+      path1,
+      {
+        attr: { d: waveShapeA },
+        duration: 0.85,
+        ease: "power2.inOut"
+      },
+      "-=0.2"
+    )
+    .to(
+      path2,
+      {
+        attr: { d: waveShapeB },
+        duration: 0.95,
+        ease: "power2.inOut"
+      },
+      "-=0.75"
+    )
+    .to(
+      path3,
+      {
+        attr: { d: waveShapeC },
+        duration: 1.05,
+        ease: "power2.inOut"
+      },
+      "-=0.85"
+    )
+    // Fase 2 do Morphing: Retração completa abrindo a tela
+    .to(
+      path1,
+      {
+        attr: { d: exitWave },
+        duration: 0.8,
+        ease: "power3.in"
+      },
+      "-=0.4"
+    )
+    .to(
+      path2,
+      {
+        attr: { d: exitWave },
+        duration: 0.85,
+        ease: "power3.in"
+      },
+      "-=0.7"
+    )
+    .to(
+      path3,
+      {
+        attr: { d: exitWave },
+        duration: 0.9,
+        ease: "power3.in"
+      },
+      "-=0.75"
+    )
+
+    // ETAPA 3: Revelação Cinematográfica da Hero Section
+    .to(
+      heroPortrait,
+      {
+        opacity: 1,
+        scale: 1,
+        y: 0,
+        duration: 0.9,
+        ease: "power3.out"
+      },
+      "-=0.6"
+    )
+    .to(
+      [heroBadge, heroTitle, heroBanner, heroDesc, heroActions],
+      {
+        opacity: 1,
+        y: 0,
+        duration: 0.8,
+        stagger: 0.12,
+        ease: "power3.out"
+      },
+      "-=0.7"
+    )
+    .to(
+      heroFloatCards,
+      {
+        opacity: 1,
+        y: 0,
+        scale: 1,
+        duration: 0.6,
+        stagger: 0.15,
+        ease: "back.out(1.4)"
+      },
+      "-=0.5"
+    );
 }
 
 /* ==========================================================================

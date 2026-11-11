@@ -1774,59 +1774,107 @@ button {
 }
 
 /* ==========================================================================
-   PRELOADER & MODAIS
+   PRELOADER COM GSAP DYNAMIC MORPHING (PROMPT 11)
+   Etapa 1: Apresentação da Logo Original de Saint Claire
+   Etapa 2: Dynamic Morphing de Cortinas SVG em Camadas Orgânicas
    ========================================================================== */
 .cinema-intro {
   position: fixed;
   inset: 0;
   z-index: 2000;
-  background-color: #160F14;
+  background-color: var(--bg-section-light);
   display: flex;
   align-items: center;
   justify-content: center;
-  transition: opacity 0.8s cubic-bezier(0.16, 1, 0.3, 1), visibility 0.8s cubic-bezier(0.16, 1, 0.3, 1);
+  overflow: hidden;
+  transition: opacity 0.6s cubic-bezier(0.16, 1, 0.3, 1), visibility 0.6s cubic-bezier(0.16, 1, 0.3, 1);
 }
 
-.cinema-intro.fade-out {
+[data-theme="dark"] .cinema-intro {
+  background-color: #160F14;
+}
+
+.cinema-intro.intro-complete {
   opacity: 0;
   visibility: hidden;
   pointer-events: none;
 }
 
-.intro-backdrop {
+/* Botão Discreto de Pular Introdução */
+.intro-skip-btn {
   position: absolute;
-  inset: 0;
-  background: radial-gradient(circle at center, rgba(98, 45, 69, 0.35) 0%, rgba(22, 15, 20, 0.96) 75%);
+  top: 24px;
+  right: 28px;
+  z-index: 2010;
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  padding: 6px 14px;
+  border-radius: var(--radius-full);
+  background: rgba(43, 25, 35, 0.6);
+  backdrop-filter: blur(8px);
+  border: 1px solid rgba(255, 255, 255, 0.2);
+  color: #FFFFFF;
+  font-family: var(--font-display);
+  font-size: 0.7rem;
+  letter-spacing: 0.14em;
+  text-transform: uppercase;
+  font-weight: 700;
+  cursor: pointer;
+  opacity: 0.85;
+  transition: all 0.2s ease;
 }
 
-.intro-content {
+.intro-skip-btn:hover {
+  opacity: 1;
+  background: var(--color-bordeaux-deep);
+  border-color: var(--color-pink-vibrant);
+  transform: translateY(-1px);
+}
+
+.skip-arrow {
+  font-size: 0.8rem;
+  transition: transform 0.2s ease;
+}
+
+.intro-skip-btn:hover .skip-arrow {
+  transform: translateX(3px);
+}
+
+/* Etapa 1: Palco Central da Logo Original */
+.intro-logo-stage {
   position: relative;
-  z-index: 2;
+  z-index: 2005;
   text-align: center;
-  max-width: 500px;
+  max-width: 520px;
   padding: var(--space-lg);
   display: flex;
   flex-direction: column;
   align-items: center;
+  pointer-events: none;
 }
 
 .intro-crest {
-  width: 46px;
-  height: 46px;
+  width: 58px;
+  height: 58px;
   border-radius: 50%;
-  border: 1px solid var(--color-pink-vibrant);
-  background: radial-gradient(circle, #4A2436 0%, #22131C 100%);
+  border: 1.5px solid var(--border-strong);
+  background: radial-gradient(circle, #622D45 0%, #2B1923 100%);
   display: flex;
   align-items: center;
   justify-content: center;
   color: var(--color-rose-bright);
-  margin-bottom: var(--space-sm);
-  box-shadow: 0 0 16px rgba(168, 90, 117, 0.25);
+  margin-bottom: var(--space-md);
+  box-shadow: 0 4px 20px rgba(43, 25, 35, 0.25);
+}
+
+[data-theme="dark"] .intro-crest {
+  background: radial-gradient(circle, #513044 0%, #160F14 100%);
 }
 
 .intro-crest svg {
-  width: 24px;
-  height: 24px;
+  width: 28px;
+  height: 28px;
   fill: currentColor;
 }
 
@@ -1835,33 +1883,42 @@ button {
   font-size: var(--font-size-aux);
   letter-spacing: 0.22em;
   text-transform: uppercase;
-  color: var(--color-rose-bright);
-  margin-bottom: 4px;
+  color: var(--color-pink-vibrant);
+  margin-bottom: 6px;
+  font-weight: 700;
 }
 
 .intro-title {
   font-family: var(--font-display);
-  font-size: clamp(1.8rem, 4vw, 2.8rem);
+  font-size: clamp(2rem, 4.5vw, 3.2rem);
   font-weight: 900;
   letter-spacing: 0.08em;
   text-transform: uppercase;
+  color: var(--color-bordeaux-deep);
+  margin-bottom: 6px;
+  line-height: 1.1;
+}
+
+[data-theme="dark"] .intro-title {
   color: #FFFFFF;
-  margin-bottom: 4px;
-  text-shadow: 0 0 20px rgba(168, 90, 117, 0.3);
 }
 
 .intro-quote {
   font-family: var(--font-serif);
   font-style: italic;
-  font-size: 0.92rem;
-  color: rgba(255, 255, 255, 0.75);
+  font-size: 0.98rem;
+  color: var(--text-secondary);
   margin-bottom: var(--space-lg);
 }
 
+[data-theme="dark"] .intro-quote {
+  color: var(--text-secondary);
+}
+
 .intro-loading-line {
-  width: 150px;
+  width: 160px;
   height: 2px;
-  background: rgba(255, 255, 255, 0.15);
+  background: var(--border-medium);
   border-radius: var(--radius-full);
   overflow: hidden;
   position: relative;
@@ -1873,8 +1930,49 @@ button {
   left: 0;
   height: 100%;
   width: 100%;
-  background: linear-gradient(90deg, transparent, var(--color-rose-bright), transparent);
-  animation: loadingProgress 1.6s ease-in-out forwards;
+  background: linear-gradient(90deg, transparent, var(--color-pink-vibrant), transparent);
+  animation: loadingProgress 1.6s ease-in-out infinite;
+}
+
+/* Etapa 2: SVG Overlay para Dynamic Morphing em Camadas */
+.morph-overlay-svg {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  z-index: 2002;
+  pointer-events: none;
+}
+
+.morph-layer {
+  vector-effect: non-scaling-stroke;
+}
+
+/* Modo Claro: Camadas nas cores oficiais refinadas */
+.morph-layer-1 {
+  fill: #622D45; /* Bordô nobre */
+}
+
+.morph-layer-2 {
+  fill: #966477; /* Malva elegante */
+}
+
+.morph-layer-3 {
+  fill: #C18B9D; /* Rosé antigo suave */
+}
+
+/* Modo Escuro: Camadas cinematográficas */
+[data-theme="dark"] .morph-layer-1 {
+  fill: #21151D;
+}
+
+[data-theme="dark"] .morph-layer-2 {
+  fill: #281A24;
+}
+
+[data-theme="dark"] .morph-layer-3 {
+  fill: #513044;
 }
 
 @keyframes loadingProgress {

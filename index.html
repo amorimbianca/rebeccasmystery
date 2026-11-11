@@ -33,23 +33,41 @@
 <body>
 
   <!-- ==========================================================================
-       ABERTURA CINEMATOGRÁFICA (PRELOADER COM TEMPO OTIMIZADO)
+       ABERTURA CINEMATOGRÁFICA — GSAP DYNAMIC MORPHING (PROMPT 11)
+       Etapa 1: Apresentação da Logo Original
+       Etapa 2: Dynamic Morphing de Camadas SVG Orgânicas e Revelação
        ========================================================================== -->
-  <div class="cinema-intro" id="cinema-intro" aria-hidden="true">
-    <div class="intro-backdrop"></div>
-    <div class="intro-content">
-      <div class="intro-crest">
-        <svg viewBox="0 0 24 24">
+  <div class="cinema-intro" id="cinema-intro" role="dialog" aria-modal="true" aria-label="Introdução cinematográfica Rebecca's Mystery">
+    <!-- Botão Discreto para Pular Introdução (Acessibilidade & UX) -->
+    <button type="button" class="intro-skip-btn" id="intro-skip-btn" aria-label="Pular introdução cinematográfica">
+      <span>Pular Intro</span>
+      <span class="skip-arrow">→</span>
+    </button>
+
+    <!-- Etapa 1: Apresentação da Logo Original e Identidade de Saint Claire -->
+    <div class="intro-logo-stage" id="intro-logo-stage">
+      <div class="intro-crest" id="intro-logo-crest">
+        <svg viewBox="0 0 24 24" aria-hidden="true">
           <path d="M12 2L4 6v6c0 5.55 3.84 10.74 8 12 4.16-1.26 8-6.45 8-12V6l-8-4zm0 3.3a2.5 2.5 0 1 1 0 5 2.5 2.5 0 0 1 0-5zm0 13.5c-2.2-1.05-4.2-3.6-4.9-6.8h9.8c-.7 3.2-2.7 5.75-4.9 6.8z"/>
         </svg>
       </div>
-      <span class="intro-tag">Arquivo Confidencial SC-104</span>
-      <h2 class="intro-title">Rebecca’s Mystery</h2>
-      <div class="intro-quote">“Meninas apoiam meninas. Pelo menos, é o que dizem.”</div>
-      <div class="intro-loading-line">
+      <span class="intro-tag" id="intro-logo-tag">Academia Saint Claire &bull; Arquivo #104</span>
+      <h2 class="intro-title" id="intro-logo-title">Rebecca’s Mystery</h2>
+      <div class="intro-quote" id="intro-logo-quote">“Meninas apoiam meninas. Pelo menos, é o que dizem.”</div>
+      <div class="intro-loading-line" id="intro-logo-line">
         <div class="intro-loading-bar"></div>
       </div>
     </div>
+
+    <!-- Etapa 2: Cortinas SVG Dinâmicas em Camadas com Curvas Bézier (Dynamic Morphing) -->
+    <svg class="morph-overlay-svg" id="morph-overlay-svg" viewBox="0 0 1440 900" preserveAspectRatio="none" aria-hidden="true">
+      <!-- Camada 3: Malva suave profunda de fundo -->
+      <path class="morph-layer morph-layer-3" id="morph-path-3" d="M 0 0 L 1440 0 L 1440 900 L 0 900 Z" />
+      <!-- Camada 2: Rosé antigo / Malva médio intermediário -->
+      <path class="morph-layer morph-layer-2" id="morph-path-2" d="M 0 0 L 1440 0 L 1440 900 L 0 900 Z" />
+      <!-- Camada 1: Bordô nobre frontal principal -->
+      <path class="morph-layer morph-layer-1" id="morph-path-1" d="M 0 0 L 1440 0 L 1440 900 L 0 900 Z" />
+    </svg>
   </div>
 
   <!-- Granulação Cinematográfica Sutil -->
@@ -729,7 +747,8 @@
     </div>
   </div>
 
-  <!-- Scripts -->
+  <!-- Scripts Core & GSAP -->
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/gsap.min.js"></script>
   <script src="assets/js/audio.js"></script>
   <script src="assets/js/characters.js"></script>
   <script src="assets/js/main.js"></script>
