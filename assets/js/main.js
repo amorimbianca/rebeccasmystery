@@ -126,93 +126,101 @@ function initCinemaPreloader() {
   });
 
   // Timeline Master do GSAP com DrawSVGPlugin
+  // Calibração de tempo estrita conforme Prompt 13:
+  // Entrada do fundo: 0,15s
+  // Desenho dos ornamentos: 0,55s
+  // Desenho do monograma RM: 0,75s
+  // Revelação da logo original: 0,35s
+  // Pequena pausa: 0,30s
+  // Transição para o site: 0,45s (Duração total ~ 2,55s)
   mainTl = gsap.timeline({
     onComplete: completeIntro
   });
 
   mainTl
-    // Suavidade inicial: respiração antes do primeiro traço
+    // Entrada rápida e suave do palco
     .to(logoStage, {
       scale: 1,
-      duration: 0.6,
-      ease: "power1.out"
+      duration: 0.15,
+      ease: "power2.out"
     })
 
     // ==========================================
-    // PRIMEIRO MOMENTO: Arco Ornamental Superior
+    // ETAPA 1: Desenho dos Ornamentos (Duração: 0,55s)
+    // Arco superior, estrelas e arco inferior em sequência ágil e contínua
     // ==========================================
     .to(arcTopPaths, {
       drawSVG: "100%",
-      duration: 1.4,
-      ease: "power2.inOut"
-    }, "+=0.1")
-
-    // ==========================================
-    // SEGUNDO MOMENTO: Estrelas & Arco Inferior
-    // ==========================================
+      duration: 0.35,
+      ease: "power2.out"
+    })
     .to(starCenterPath, {
       drawSVG: "100%",
-      duration: 0.9,
+      duration: 0.22,
       ease: "power2.out"
-    }, "-=0.35")
+    }, "-=0.2")
     .to(starsLateralPaths, {
       drawSVG: "100%",
-      duration: 0.85,
-      stagger: 0.15,
+      duration: 0.25,
+      stagger: 0.04,
       ease: "power2.out"
-    }, "-=0.55")
+    }, "-=0.18")
     .to(arcBottomPaths, {
       drawSVG: "100%",
-      duration: 1.3,
-      stagger: 0.2,
-      ease: "power2.inOut"
-    }, "-=0.45")
+      duration: 0.35,
+      stagger: 0.05,
+      ease: "power2.out"
+    }, "-=0.22")
 
     // ==========================================
-    // TERCEIRO MOMENTO: Contornos do Monograma RM
-    // R surge primeiro com elegância, seguido por M
+    // ETAPA 2: Desenho do Monograma RM (Duração: 0,75s)
+    // R desenhado primeiro de forma fluida, seguido imediatamente por M
     // ==========================================
     .to(letterRPaths, {
       drawSVG: "100%",
-      duration: 1.4,
-      stagger: 0.25,
-      ease: "power2.inOut"
-    }, "-=0.2")
+      duration: 0.45,
+      stagger: 0.08,
+      ease: "power2.out"
+    }, "-=0.08")
     .to(letterMPaths, {
       drawSVG: "100%",
-      duration: 1.3,
-      ease: "power2.inOut"
-    }, "-=0.4")
+      duration: 0.38,
+      ease: "power2.out"
+    }, "-=0.15")
 
     // ==========================================
-    // QUARTO MOMENTO: Revelação da Logo Original
-    // Transição suave para a textura rosé suave original
+    // ETAPA 3: Revelação da Logo Original (Duração: 0,35s)
+    // Logo PNG surge com textura e fidelidade absolutas
     // ==========================================
     .to(logoPng, {
       opacity: 1,
-      duration: 1.0,
-      ease: "power2.out"
-    }, "+=0.1")
+      duration: 0.35,
+      ease: "power1.out"
+    })
     .to(logoSvg, {
       opacity: 0,
-      duration: 0.8,
-      ease: "power2.inOut"
-    }, "-=0.9")
+      duration: 0.25,
+      ease: "power1.in"
+    }, "<")
 
     // ==========================================
-    // SAÍDA DA INTRODUÇÃO
-    // Pausa contemplativa, redução sutil de escala e saída suave
+    // ETAPA 4: Pequena Pausa (Duração: 0,30s)
     // ==========================================
     .to(logoPng, {
-      scale: 0.96,
-      duration: 1.1,
-      ease: "power1.inOut"
-    }, "+=0.3")
+      scale: 0.98,
+      duration: 0.30,
+      ease: "none"
+    })
+
+    // ==========================================
+    // ETAPA 5: Transição para o Site (Duração: 0,45s)
+    // Desaparecimento da intro e revelação simultânea da Hero
+    // ==========================================
     .to(intro, {
       opacity: 0,
-      duration: 0.85,
-      ease: "power2.inOut"
-    }, "-=0.2")
+      duration: 0.45,
+      ease: "power2.out"
+    })
 
     // Revelação coreografada dos elementos da Hero Section
     .to(
@@ -221,21 +229,21 @@ function initCinemaPreloader() {
         opacity: 1,
         scale: 1,
         y: 0,
-        duration: 0.9,
+        duration: 0.6,
         ease: "power3.out"
       },
-      "-=0.6"
+      "-=0.35"
     )
     .to(
       [heroBadge, heroTitle, heroBanner, heroDesc, heroActions],
       {
         opacity: 1,
         y: 0,
-        duration: 0.8,
-        stagger: 0.12,
+        duration: 0.55,
+        stagger: 0.08,
         ease: "power3.out"
       },
-      "-=0.7"
+      "-=0.45"
     )
     .to(
       heroFloatCards,
