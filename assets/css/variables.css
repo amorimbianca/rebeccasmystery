@@ -112,7 +112,8 @@
 
   /* --- Dimensões Globais --- */
   --container-max: 1180px;
-  --header-height: 72px;
+  --header-height: 70px;
+  --ticker-height: 44px;
 
   /* --- Raios de Borda --- */
   --radius-xs: 4px;
