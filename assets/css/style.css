@@ -476,12 +476,12 @@ button {
    ========================================================================== */
 .section-hero-ref {
   background-color: var(--bg-section-light);
-  min-height: calc(100vh - var(--header-height));
+  min-height: 640px;
   position: relative;
-  padding-top: calc(var(--header-height) + var(--space-2xl) + 16px);
+  padding-top: calc(var(--header-height) + var(--space-xl));
   padding-bottom: var(--space-xl);
   display: flex;
-  flex-direction: column;
+  align-items: center;
   justify-content: center;
   overflow: hidden;
   transition: var(--theme-transition);
@@ -497,22 +497,22 @@ button {
 }
 
 .ref-star-1 {
-  top: 18%;
+  top: 15%;
   right: 5%;
-  font-size: 4rem;
+  font-size: 3.5rem;
   transform: rotate(15deg);
 }
 
 .ref-star-2 {
-  top: 48%;
+  top: 45%;
   left: 2.5%;
-  font-size: 2.4rem;
+  font-size: 2.2rem;
 }
 
 .ref-star-3 {
-  bottom: 12%;
+  bottom: 8%;
   right: 42%;
-  font-size: 3rem;
+  font-size: 2.8rem;
 }
 
 .ref-badge-metric {
@@ -532,19 +532,19 @@ button {
   transition: var(--theme-transition);
 }
 
-.ref-metric-top { top: calc(var(--header-height) + 24px); right: 46%; }
-.ref-metric-right { top: 35%; right: 2%; }
+.ref-metric-top { top: calc(var(--header-height) + 16px); right: 46%; }
+.ref-metric-right { top: 32%; right: 2%; }
 
 .ref-hero-grid {
   display: grid;
-  grid-template-columns: 1.05fr 0.95fr;
+  grid-template-columns: 1.1fr 0.9fr;
   gap: var(--space-2xl);
   align-items: center;
   position: relative;
   z-index: 2;
-  margin: auto 0;
-  padding-top: var(--space-md);
-  padding-bottom: var(--space-lg);
+  max-width: 1240px;
+  width: 100%;
+  margin: 0 auto;
 }
 
 .ref-hero-text-col {
@@ -553,21 +553,22 @@ button {
   align-items: flex-start;
   justify-content: center;
   padding-right: var(--space-md);
+  min-width: 0;
 }
 
 .ref-hero-title {
   font-family: var(--font-display);
-  font-size: clamp(2.4rem, 4.2vw, 3.8rem);
+  font-size: clamp(2.3rem, 3.8vw, 3.5rem);
   font-weight: 900;
   color: var(--color-bordeaux-deep);
-  line-height: 1.18;
+  line-height: 1.15;
   margin: var(--space-sm) 0 var(--space-sm);
   letter-spacing: 0.01em;
   transition: color 0.35s ease;
 }
 
 .ref-headline-banner {
-  font-size: clamp(1.15rem, 1.8vw, 1.45rem);
+  font-size: clamp(1.1rem, 1.6vw, 1.35rem);
   font-weight: 700;
   color: var(--text-primary);
   line-height: 1.4;
@@ -579,7 +580,7 @@ button {
   font-size: var(--font-size-body);
   color: var(--text-secondary);
   line-height: 1.6;
-  max-width: 490px;
+  max-width: 480px;
   margin-bottom: var(--space-lg);
   transition: color 0.35s ease;
 }
@@ -604,13 +605,13 @@ button {
   display: flex;
   justify-content: center;
   align-items: center;
-  min-height: 480px;
+  min-width: 0;
 }
 
 .ref-backdrop-card {
   position: absolute;
-  width: 78%;
-  height: 94%;
+  width: 76%;
+  height: 92%;
   background: var(--backdrop-card-gradient);
   border-radius: var(--radius-xl);
   transform: rotate(2.5deg);
@@ -621,24 +622,27 @@ button {
 
 .ref-hero-portrait-frame {
   position: relative;
-  width: 82%;
-  max-width: 440px;
+  width: 100%;
+  max-width: 380px;
+  max-height: 500px;
   aspect-ratio: 1024 / 1536;
-  max-height: 540px;
   border-radius: var(--radius-xl);
   overflow: hidden;
-  box-shadow: 0 16px 40px rgba(43, 25, 35, 0.22);
+  box-shadow: 0 14px 36px rgba(43, 25, 35, 0.20);
   z-index: 2;
   border: 2px solid var(--portrait-border);
   background: var(--bg-tertiary);
+  display: flex;
+  align-items: center;
+  justify-content: center;
   transition: var(--theme-transition);
 }
 
 .ref-hero-img-main {
   width: 100%;
   height: 100%;
-  object-fit: cover;
-  object-position: center top;
+  object-fit: contain;
+  object-position: center center;
   display: block;
 }
 
@@ -667,7 +671,6 @@ button {
   top: 14px;
   right: -10px;
   transform: rotate(3deg);
-}
 }
 
 .ref-float-thumb {
