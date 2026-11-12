@@ -20,10 +20,13 @@ document.addEventListener("DOMContentLoaded", () => {
 });
 
 /* ==========================================================================
-   1. ABERTURA CINEMATOGRÁFICA COM GSAP DYNAMIC MORPHING (PROMPT 11)
-   Etapa 1: Apresentação da logo Rebecca's Mystery com fade, escala e iluminação sutil.
-   Etapa 2: Dynamic Morphing de cortinas SVG com curvas Bézier orgânicas em 3 camadas,
-            revelando a Hero Section com stagger e continuidade cinematográfica.
+   1. ABERTURA CINEMATOGRÁFICA COM GSAP DRAWSVG (PROMPT 12)
+   - Fundo vinho profundo: #160F14
+   - Momento 1: Arco ornamental superior desenhado com elegância e fluidez
+   - Momento 2: Estrela central superior, estrelas laterais e arco inferior
+   - Momento 3: Contornos do monograma RM (R primeiro com curvas nobres, depois M)
+   - Momento 4: Finalização dos caminhos SVG e revelação suave da logo original PNG
+   - Saída: Pausa contemplativa, redução sutil de escala e transição graciosa para o site
    ========================================================================== */
 function initCinemaPreloader() {
   const intro = document.getElementById("cinema-intro");
@@ -31,17 +34,19 @@ function initCinemaPreloader() {
 
   const skipBtn = document.getElementById("intro-skip-btn");
   const logoStage = document.getElementById("intro-logo-stage");
-  const crest = document.getElementById("intro-logo-crest");
-  const tag = document.getElementById("intro-logo-tag");
-  const title = document.getElementById("intro-logo-title");
-  const quote = document.getElementById("intro-logo-quote");
-  const line = document.getElementById("intro-logo-line");
+  const logoSvg = document.getElementById("logo-rm-svg");
+  const logoPng = document.getElementById("intro-logo-png");
 
-  const path1 = document.getElementById("morph-path-1");
-  const path2 = document.getElementById("morph-path-2");
-  const path3 = document.getElementById("morph-path-3");
+  // Caminhos das 4 etapas de desenho
+  const arcTopPaths = document.querySelectorAll("#draw-arc-top .draw-path");
+  const starCenterPath = document.querySelectorAll("#draw-star-center .draw-path");
+  const starsLateralPaths = document.querySelectorAll("#draw-stars-lateral .draw-path");
+  const arcBottomPaths = document.querySelectorAll("#draw-arc-bottom .draw-path");
+  const letterRPaths = document.querySelectorAll("#draw-monogram-r .draw-path");
+  const letterMPaths = document.querySelectorAll("#draw-monogram-m .draw-path");
+  const allSvgPaths = document.querySelectorAll("#logo-rm-svg .draw-path");
 
-  // Hero elements para revelação sequencial
+  // Hero elements para revelação sequencial pós-intro
   const heroTitle = document.querySelector(".ref-hero-title");
   const heroBadge = document.querySelector(".ref-lead-tag");
   const heroBanner = document.querySelector(".ref-headline-banner");
@@ -56,8 +61,10 @@ function initCinemaPreloader() {
     intro.classList.add("intro-complete");
     sessionStorage.setItem("rm_intro_seen", "true");
     setTimeout(() => {
-      intro.remove();
-    }, 700);
+      if (intro && intro.parentNode) {
+        intro.remove();
+      }
+    }, 850);
   };
 
   // Se o usuário prefere redução de movimento ou já visualizou nesta sessão
@@ -69,23 +76,23 @@ function initCinemaPreloader() {
     return;
   }
 
-  // Previne rolagem durante a abertura
+  // Previne rolagem durante a abertura cinematográfica
   document.body.style.overflow = "hidden";
 
-  // Se o GSAP não estiver disponível por qualquer motivo, fallback gracioso
+  // Se o GSAP não estiver disponível, fallback gracioso
   if (typeof gsap === "undefined") {
-    setTimeout(completeIntro, 2200);
+    setTimeout(completeIntro, 2500);
     return;
   }
 
-  // Listener do botão Pular
+  // Listener do botão Pular Intro
   let mainTl = null;
   if (skipBtn) {
     skipBtn.addEventListener("click", () => {
       if (mainTl) mainTl.kill();
       gsap.to(intro, {
         opacity: 0,
-        duration: 0.4,
+        duration: 0.45,
         ease: "power2.out",
         onComplete: completeIntro
       });
@@ -104,127 +111,110 @@ function initCinemaPreloader() {
     gsap.set(heroFloatCards, { opacity: 0, y: 15, scale: 0.9 });
   }
 
-  // Definição dos caminhos SVG orgânicos para o Dynamic Morphing
-  // viewBox: 0 0 1440 900
-  // Início: Cobrindo toda a tela
-  const fullCover = "M 0 0 L 1440 0 L 1440 900 L 0 900 Z";
+  // Configuração inicial de todos os traços SVG para desenho com DrawSVG
+  gsap.set(allSvgPaths, {
+    drawSVG: "0%",
+    opacity: 0.95
+  });
+  gsap.set(logoPng, {
+    opacity: 0,
+    scale: 0.99
+  });
+  gsap.set(logoStage, {
+    opacity: 1,
+    scale: 0.98
+  });
 
-  // Morfismo 1: Ondulação fluida intermediária (curva senoidal com ponto de inflexão)
-  const waveShapeA = "M 0 0 L 1440 0 L 1440 450 Q 1080 820 720 520 Q 360 220 0 680 Z";
-  const waveShapeB = "M 0 0 L 1440 0 L 1440 380 Q 1120 180 720 480 Q 320 780 0 540 Z";
-  const waveShapeC = "M 0 0 L 1440 0 L 1440 280 Q 1000 620 720 320 Q 440 80 0 380 Z";
-
-  // Morfismo 2: Retração final orgânica ultrapassando o topo
-  const exitWave = "M 0 0 L 1440 0 L 1440 0 Q 720 -180 0 0 Z";
-
-  // Timeline Master do GSAP
+  // Timeline Master do GSAP com DrawSVGPlugin
   mainTl = gsap.timeline({
     onComplete: completeIntro
   });
 
-  // ETAPA 1: Apresentação da Logo Original
   mainTl
-    .set([crest, tag, title, quote, line], { opacity: 0, y: 16 })
-    .to(crest, {
-      opacity: 1,
-      y: 0,
-      scale: 1,
-      duration: 0.8,
-      ease: "power3.out"
-    })
-    .to(
-      [tag, title],
-      {
-        opacity: 1,
-        y: 0,
-        duration: 0.7,
-        stagger: 0.12,
-        ease: "power2.out"
-      },
-      "-=0.4"
-    )
-    .to(
-      [quote, line],
-      {
-        opacity: 1,
-        y: 0,
-        duration: 0.6,
-        stagger: 0.1,
-        ease: "power2.out"
-      },
-      "-=0.3"
-    )
-    .to({}, { duration: 0.9 }) // Pausa contemplativa sofisticada
-    // Saída suave da logo antes do morphing
+    // Suavidade inicial: respiração antes do primeiro traço
     .to(logoStage, {
-      opacity: 0,
-      y: -25,
-      scale: 0.96,
+      scale: 1,
       duration: 0.6,
-      ease: "power2.in"
-    });
+      ease: "power1.out"
+    })
 
-  // ETAPA 2: GSAP Dynamic Morphing das Camadas SVG em Curvas Bézier
-  // Animação das 3 camadas SVG escalonadas (Layer 1, Layer 2, Layer 3)
-  mainTl
-    // Fase 1 do Morphing: Deformação orgânica em ondas fluidas com stagger
-    .to(
-      path1,
-      {
-        attr: { d: waveShapeA },
-        duration: 0.85,
-        ease: "power2.inOut"
-      },
-      "-=0.2"
-    )
-    .to(
-      path2,
-      {
-        attr: { d: waveShapeB },
-        duration: 0.95,
-        ease: "power2.inOut"
-      },
-      "-=0.75"
-    )
-    .to(
-      path3,
-      {
-        attr: { d: waveShapeC },
-        duration: 1.05,
-        ease: "power2.inOut"
-      },
-      "-=0.85"
-    )
-    // Fase 2 do Morphing: Retração completa abrindo a tela
-    .to(
-      path1,
-      {
-        attr: { d: exitWave },
-        duration: 0.8,
-        ease: "power3.in"
-      },
-      "-=0.4"
-    )
-    .to(
-      path2,
-      {
-        attr: { d: exitWave },
-        duration: 0.85,
-        ease: "power3.in"
-      },
-      "-=0.7"
-    )
-    .to(
-      path3,
-      {
-        attr: { d: exitWave },
-        duration: 0.9,
-        ease: "power3.in"
-      },
-      "-=0.75"
-    )
+    // ==========================================
+    // PRIMEIRO MOMENTO: Arco Ornamental Superior
+    // ==========================================
+    .to(arcTopPaths, {
+      drawSVG: "100%",
+      duration: 1.4,
+      ease: "power2.inOut"
+    }, "+=0.1")
 
-    // ETAPA 3: Revelação Cinematográfica da Hero Section
+    // ==========================================
+    // SEGUNDO MOMENTO: Estrelas & Arco Inferior
+    // ==========================================
+    .to(starCenterPath, {
+      drawSVG: "100%",
+      duration: 0.9,
+      ease: "power2.out"
+    }, "-=0.35")
+    .to(starsLateralPaths, {
+      drawSVG: "100%",
+      duration: 0.85,
+      stagger: 0.15,
+      ease: "power2.out"
+    }, "-=0.55")
+    .to(arcBottomPaths, {
+      drawSVG: "100%",
+      duration: 1.3,
+      stagger: 0.2,
+      ease: "power2.inOut"
+    }, "-=0.45")
+
+    // ==========================================
+    // TERCEIRO MOMENTO: Contornos do Monograma RM
+    // R surge primeiro com elegância, seguido por M
+    // ==========================================
+    .to(letterRPaths, {
+      drawSVG: "100%",
+      duration: 1.4,
+      stagger: 0.25,
+      ease: "power2.inOut"
+    }, "-=0.2")
+    .to(letterMPaths, {
+      drawSVG: "100%",
+      duration: 1.3,
+      ease: "power2.inOut"
+    }, "-=0.4")
+
+    // ==========================================
+    // QUARTO MOMENTO: Revelação da Logo Original
+    // Transição suave para a textura rosé suave original
+    // ==========================================
+    .to(logoPng, {
+      opacity: 1,
+      duration: 1.0,
+      ease: "power2.out"
+    }, "+=0.1")
+    .to(logoSvg, {
+      opacity: 0,
+      duration: 0.8,
+      ease: "power2.inOut"
+    }, "-=0.9")
+
+    // ==========================================
+    // SAÍDA DA INTRODUÇÃO
+    // Pausa contemplativa, redução sutil de escala e saída suave
+    // ==========================================
+    .to(logoPng, {
+      scale: 0.96,
+      duration: 1.1,
+      ease: "power1.inOut"
+    }, "+=0.3")
+    .to(intro, {
+      opacity: 0,
+      duration: 0.85,
+      ease: "power2.inOut"
+    }, "-=0.2")
+
+    // Revelação coreografada dos elementos da Hero Section
     .to(
       heroPortrait,
       {

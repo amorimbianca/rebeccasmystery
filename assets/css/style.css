@@ -1774,20 +1774,20 @@ button {
 }
 
 /* ==========================================================================
-   PRELOADER COM GSAP DYNAMIC MORPHING (PROMPT 11)
-   Etapa 1: Apresentação da Logo Original de Saint Claire
-   Etapa 2: Dynamic Morphing de Cortinas SVG em Camadas Orgânicas
+   ABERTURA CINEMATOGRÁFICA — GSAP DRAWSVG (PROMPT 12)
+   Fundo Vinho Profundo (#160F14), Desenho Progressivo dos Arcos, Estrelas e Monograma RM,
+   seguido da Revelação da Logo Original e Transição Suave para a Hero Section.
    ========================================================================== */
 .cinema-intro {
   position: fixed;
   inset: 0;
   z-index: 2000;
-  background-color: var(--bg-section-light);
+  background-color: #160F14; /* Fundo vinho profundo obrigatório em ambos os temas durante a abertura */
   display: flex;
   align-items: center;
   justify-content: center;
   overflow: hidden;
-  transition: opacity 0.6s cubic-bezier(0.16, 1, 0.3, 1), visibility 0.6s cubic-bezier(0.16, 1, 0.3, 1);
+  transition: opacity 0.8s cubic-bezier(0.16, 1, 0.3, 1), visibility 0.8s cubic-bezier(0.16, 1, 0.3, 1);
 }
 
 [data-theme="dark"] .cinema-intro {
@@ -1809,31 +1809,32 @@ button {
   display: inline-flex;
   align-items: center;
   gap: 6px;
-  padding: 6px 14px;
+  padding: 8px 16px;
   border-radius: var(--radius-full);
-  background: rgba(43, 25, 35, 0.6);
-  backdrop-filter: blur(8px);
-  border: 1px solid rgba(255, 255, 255, 0.2);
-  color: #FFFFFF;
+  background: rgba(33, 21, 29, 0.7);
+  backdrop-filter: blur(10px);
+  border: 1px solid rgba(210, 166, 180, 0.25);
+  color: #D2A6B4;
   font-family: var(--font-display);
-  font-size: 0.7rem;
+  font-size: 0.72rem;
   letter-spacing: 0.14em;
   text-transform: uppercase;
   font-weight: 700;
   cursor: pointer;
   opacity: 0.85;
-  transition: all 0.2s ease;
+  transition: all 0.25s ease;
 }
 
 .intro-skip-btn:hover {
   opacity: 1;
-  background: var(--color-bordeaux-deep);
-  border-color: var(--color-pink-vibrant);
+  background: #513044;
+  color: #FFFFFF;
+  border-color: #D2A6B4;
   transform: translateY(-1px);
 }
 
 .skip-arrow {
-  font-size: 0.8rem;
+  font-size: 0.85rem;
   transition: transform 0.2s ease;
 }
 
@@ -1841,143 +1842,46 @@ button {
   transform: translateX(3px);
 }
 
-/* Etapa 1: Palco Central da Logo Original */
+/* Palco Central da Logo RM */
 .intro-logo-stage {
   position: relative;
   z-index: 2005;
-  text-align: center;
-  max-width: 520px;
-  padding: var(--space-lg);
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  pointer-events: none;
-}
-
-.intro-crest {
-  width: 58px;
-  height: 58px;
-  border-radius: 50%;
-  border: 1.5px solid var(--border-strong);
-  background: radial-gradient(circle, #622D45 0%, #2B1923 100%);
+  width: min(84vw, 560px);
+  height: min(84vw, 560px);
   display: flex;
   align-items: center;
   justify-content: center;
-  color: var(--color-rose-bright);
-  margin-bottom: var(--space-md);
-  box-shadow: 0 4px 20px rgba(43, 25, 35, 0.25);
-}
-
-[data-theme="dark"] .intro-crest {
-  background: radial-gradient(circle, #513044 0%, #160F14 100%);
-}
-
-.intro-crest svg {
-  width: 28px;
-  height: 28px;
-  fill: currentColor;
-}
-
-.intro-tag {
-  font-family: var(--font-display);
-  font-size: var(--font-size-aux);
-  letter-spacing: 0.22em;
-  text-transform: uppercase;
-  color: var(--color-pink-vibrant);
-  margin-bottom: 6px;
-  font-weight: 700;
-}
-
-.intro-title {
-  font-family: var(--font-display);
-  font-size: clamp(2rem, 4.5vw, 3.2rem);
-  font-weight: 900;
-  letter-spacing: 0.08em;
-  text-transform: uppercase;
-  color: var(--color-bordeaux-deep);
-  margin-bottom: 6px;
-  line-height: 1.1;
-}
-
-[data-theme="dark"] .intro-title {
-  color: #FFFFFF;
-}
-
-.intro-quote {
-  font-family: var(--font-serif);
-  font-style: italic;
-  font-size: 0.98rem;
-  color: var(--text-secondary);
-  margin-bottom: var(--space-lg);
-}
-
-[data-theme="dark"] .intro-quote {
-  color: var(--text-secondary);
-}
-
-.intro-loading-line {
-  width: 160px;
-  height: 2px;
-  background: var(--border-medium);
-  border-radius: var(--radius-full);
-  overflow: hidden;
-  position: relative;
-}
-
-.intro-loading-bar {
-  position: absolute;
-  top: 0;
-  left: 0;
-  height: 100%;
-  width: 100%;
-  background: linear-gradient(90deg, transparent, var(--color-pink-vibrant), transparent);
-  animation: loadingProgress 1.6s ease-in-out infinite;
-}
-
-/* Etapa 2: SVG Overlay para Dynamic Morphing em Camadas */
-.morph-overlay-svg {
-  position: absolute;
-  top: 0;
-  left: 0;
-  width: 100%;
-  height: 100%;
-  z-index: 2002;
   pointer-events: none;
 }
 
-.morph-layer {
+/* Vetor SVG da Logo RM para Animação com GSAP DrawSVG */
+.intro-logo-svg {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  overflow: visible;
+  pointer-events: none;
+  z-index: 2;
+}
+
+.intro-logo-svg .draw-path {
   vector-effect: non-scaling-stroke;
 }
 
-/* Modo Claro: Camadas nas cores oficiais refinadas */
-.morph-layer-1 {
-  fill: #622D45; /* Bordô nobre */
-}
-
-.morph-layer-2 {
-  fill: #966477; /* Malva elegante */
-}
-
-.morph-layer-3 {
-  fill: #C18B9D; /* Rosé antigo suave */
-}
-
-/* Modo Escuro: Camadas cinematográficas */
-[data-theme="dark"] .morph-layer-1 {
-  fill: #21151D;
-}
-
-[data-theme="dark"] .morph-layer-2 {
-  fill: #281A24;
-}
-
-[data-theme="dark"] .morph-layer-3 {
-  fill: #513044;
-}
-
-@keyframes loadingProgress {
-  0% { transform: translateX(-100%); }
-  100% { transform: translateX(100%); }
+/* Imagem PNG Original da Logo RM com textura rosé suave */
+.intro-logo-png {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  object-fit: contain;
+  opacity: 0;
+  z-index: 3;
+  pointer-events: none;
+  filter: drop-shadow(0 8px 30px rgba(0, 0, 0, 0.45));
 }
 
 /* Modais */
