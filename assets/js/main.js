@@ -52,14 +52,32 @@ function initCinemaPreloader() {
   const heroBanner = document.querySelector(".ref-headline-banner");
   const heroDesc = document.querySelector(".ref-hero-desc");
   const heroActions = document.querySelector(".ref-hero-action-row");
-  const heroPortrait = document.querySelector(".ref-hero-portrait-frame");
-  const heroFloatCards = document.querySelectorAll(".ref-float-card");
+  const heroPortrait = document.querySelector(".ref-hero-main-card, .ref-hero-portrait-frame");
+  const heroFloatCards = document.querySelectorAll(".ref-hero-avatars-dock, .ref-hero-float-badge, .ref-hero-float-btn, .ref-hero-chip-status, .ref-float-card");
 
   // Função para encerrar e remover overlay
   const completeIntro = () => {
     document.body.style.overflow = "";
     intro.classList.add("intro-complete");
     sessionStorage.setItem("rm_intro_seen", "true");
+    if (typeof gsap !== "undefined") {
+      gsap.to([heroBadge, heroTitle, heroBanner, heroDesc, heroActions, heroPortrait], {
+        opacity: 1,
+        y: 0,
+        scale: 1,
+        duration: 0.35,
+        overwrite: "auto"
+      });
+      if (heroFloatCards && heroFloatCards.length) {
+        gsap.to(heroFloatCards, {
+          opacity: 1,
+          y: 0,
+          scale: 1,
+          duration: 0.35,
+          overwrite: "auto"
+        });
+      }
+    }
     setTimeout(() => {
       if (intro && intro.parentNode) {
         intro.remove();
