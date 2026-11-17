@@ -144,31 +144,4 @@ function showDossierModal(char) {
   if (closeBtn) closeBtn.focus();
 }
 
-/**
- * Microinteração elegante: vincular os avatares circulares da Hero
- * aos dossiês dos personagens correspondentes (Prompt 18)
- */
-function initHeroAvatars() {
-  const avatarLinks = document.querySelectorAll(".ref-hero-avatar-item[data-char-id]");
-  avatarLinks.forEach((link) => {
-    const handleOpen = (e) => {
-      const charId = link.getAttribute("data-char-id");
-      const char = charactersData.find((c) => c.id === charId);
-      if (char) {
-        e.preventDefault();
-        showDossierModal(char);
-      }
-    };
-    link.addEventListener("click", handleOpen);
-    link.addEventListener("keydown", (e) => {
-      if (e.key === "Enter" || e.key === " ") {
-        handleOpen(e);
-      }
-    });
-  });
-}
-
-document.addEventListener("DOMContentLoaded", () => {
-  initCharacters();
-  initHeroAvatars();
-});
+document.addEventListener("DOMContentLoaded", initCharacters);

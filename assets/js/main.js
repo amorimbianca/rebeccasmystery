@@ -52,8 +52,7 @@ function initCinemaPreloader() {
   const heroBanner = document.querySelector(".ref-headline-banner");
   const heroDesc = document.querySelector(".ref-hero-desc");
   const heroActions = document.querySelector(".ref-hero-action-row");
-  const heroPortrait = document.querySelector(".ref-hero-main-card, .ref-hero-portrait-frame");
-  const heroFloatCards = document.querySelectorAll(".ref-hero-avatars-dock, .ref-hero-float-badge, .ref-hero-float-btn, .ref-hero-chip-status, .ref-float-card");
+  const heroVisual = document.querySelector(".ref-hero-keyart-portal, .ref-hero-visual-col");
 
   // Função para encerrar e remover overlay
   const completeIntro = () => {
@@ -61,22 +60,13 @@ function initCinemaPreloader() {
     intro.classList.add("intro-complete");
     sessionStorage.setItem("rm_intro_seen", "true");
     if (typeof gsap !== "undefined") {
-      gsap.to([heroBadge, heroTitle, heroBanner, heroDesc, heroActions, heroPortrait], {
+      gsap.to([heroBadge, heroTitle, heroBanner, heroDesc, heroActions, heroVisual].filter(Boolean), {
         opacity: 1,
         y: 0,
         scale: 1,
         duration: 0.35,
         overwrite: "auto"
       });
-      if (heroFloatCards && heroFloatCards.length) {
-        gsap.to(heroFloatCards, {
-          opacity: 1,
-          y: 0,
-          scale: 1,
-          duration: 0.35,
-          overwrite: "auto"
-        });
-      }
     }
     setTimeout(() => {
       if (intro && intro.parentNode) {
@@ -118,15 +108,12 @@ function initCinemaPreloader() {
   }
 
   // Estado inicial dos elementos da Hero para revelação coreografada
-  gsap.set([heroBadge, heroTitle, heroBanner, heroDesc, heroActions], {
+  gsap.set([heroBadge, heroTitle, heroBanner, heroDesc, heroActions].filter(Boolean), {
     opacity: 0,
     y: 25
   });
-  if (heroPortrait) {
-    gsap.set(heroPortrait, { opacity: 0, scale: 0.95, y: 30 });
-  }
-  if (heroFloatCards.length) {
-    gsap.set(heroFloatCards, { opacity: 0, y: 15, scale: 0.9 });
+  if (heroVisual) {
+    gsap.set(heroVisual, { opacity: 0, scale: 0.96, y: 24 });
   }
 
   // Configuração inicial de todos os traços SVG para desenho com DrawSVG
@@ -242,18 +229,18 @@ function initCinemaPreloader() {
 
     // Revelação coreografada dos elementos da Hero Section
     .to(
-      heroPortrait,
+      heroVisual,
       {
         opacity: 1,
         scale: 1,
         y: 0,
-        duration: 0.6,
+        duration: 0.65,
         ease: "power3.out"
       },
       "-=0.35"
     )
     .to(
-      [heroBadge, heroTitle, heroBanner, heroDesc, heroActions],
+      [heroBadge, heroTitle, heroBanner, heroDesc, heroActions].filter(Boolean),
       {
         opacity: 1,
         y: 0,
@@ -262,18 +249,6 @@ function initCinemaPreloader() {
         ease: "power3.out"
       },
       "-=0.45"
-    )
-    .to(
-      heroFloatCards,
-      {
-        opacity: 1,
-        y: 0,
-        scale: 1,
-        duration: 0.6,
-        stagger: 0.15,
-        ease: "back.out(1.4)"
-      },
-      "-=0.5"
     );
 }
 
