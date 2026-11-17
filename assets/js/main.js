@@ -7,6 +7,7 @@
 document.addEventListener("DOMContentLoaded", () => {
   initThemeManager();
   initCinemaPreloader();
+  initHeroInteractiveGradient();
   initHeaderScroll();
   initMobileMenu();
   initNavigationScroll();
@@ -626,4 +627,82 @@ function initThemeManager() {
       }
     });
   }
+}
+
+/* ==========================================================================
+   GRADIENT INTERATIVO NO FUNDO DA HERO SECTION (PROMPT 20)
+   Acompanhamento fluido e delicado da movimentação do mouse com interpolação linear (lerp)
+   e retorno suave à posição central ao sair da seção.
+   ========================================================================== */
+function initHeroInteractiveGradient() {
+  const heroSection = document.querySelector(".section-hero-ref");
+  if (!heroSection) return;
+
+  // Em dispositivos touch ou com preferência de redução de movimento, manter posição estática elegante
+  const isTouch = window.matchMedia("(pointer: coarse)").matches || "ontouchstart" in window;
+  const prefersReduced = window.matchMedia("(prefers-reduced-motion: reduce)").matches || document.body.classList.contains("reduce-motion");
+
+  if (isTouch || prefersReduced) {
+    heroSection.style.setProperty("--mouse-x", "50%");
+    heroSection.style.setProperty("--mouse-y", "45%");
+    return;
+  }
+
+  // Posições alvo e atual para interpolação suave (lerp)
+  let targetX = 50;
+  let targetY = 45;
+  let currentX = 50;
+  let currentY = 45;
+  let isHovered = false;
+  let rafId = null;
+
+  // Interpolação Linear para movimento orgânico
+  const lerp = (start, end, factor) => start + (end - start) * factor;
+
+  const updateGradient = () => {
+    // Fator de suavização: mais rápido ao seguir o cursor, mais sutil ao retornar
+    const factor = isHovered ? 0.075 : 0.045;
+    currentX = lerp(currentX, targetX, factor);
+    currentY = lerp(currentY, targetY, factor);
+
+    heroSection.style.setProperty("--mouse-x", `${currentX.toFixed(2)}%`);
+    heroSection.style.setProperty("--mouse-y", `${currentY.toFixed(2)}%`);
+
+    // Continua o loop enquanto houver diferença perceptível ou enquanto o mouse estiver sobre a seção
+    const diff = Math.abs(currentX - targetX) + Math.abs(currentY - targetY);
+    if (isHovered || diff > 0.05) {
+      rafId = requestAnimationFrame(updateGradient);
+    } else {
+      rafId = null;
+    }
+  };
+
+  heroSection.addEventListener("mousemove", (e) => {
+    const rect = heroSection.getBoundingClientRect();
+    if (rect.width <= 0 || rect.height <= 0) return;
+
+    // Converte a posição do cursor em porcentagem dentro da Hero
+    const x = ((e.clientX - rect.left) / rect.width) * 100;
+    const y = ((e.clientY - rect.top) / rect.height) * 100;
+
+    // Limita levemente para manter a iluminação com alcance orgânico
+    targetX = Math.max(10, Math.min(90, x));
+    targetY = Math.max(10, Math.min(90, y));
+    isHovered = true;
+
+    if (!rafId) {
+      rafId = requestAnimationFrame(updateGradient);
+    }
+  });
+
+  heroSection.addEventListener("mouseleave", () => {
+    // Retorno suave à iluminação ambiente de repouso
+    targetX = 50;
+    targetY = 45;
+    isHovered = false;
+
+    if (!rafId) {
+      rafId = requestAnimationFrame(updateGradient);
+    }
+  });
 }

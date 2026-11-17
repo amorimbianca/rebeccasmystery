@@ -472,14 +472,32 @@ button {
 .hamburger-line::after { top: 5px; }
 
 /* ==========================================================================
-   SEÇÃO 1 — HERO SECTION (PROMPT 17: REFINAMENTO VISUAL, PESOS EQUILIBRADOS & IMPACTO)
-   Composição preenchida e profissional, com tipografia ampla e imagem de destaque.
+   SEÇÃO 1 — HERO SECTION (PROMPTS 19 & 20: GRADIENT INTERATIVO & KEY ART REFINADA)
+   Iluminação ambiente interativa com mouse tracking suave e apresentação
+   editorial cinematográfica dos seis personagens.
    ========================================================================== */
 .section-hero-ref {
+  --mouse-x: 50%;
+  --mouse-y: 45%;
+  --mouse-speed: 0;
+  position: relative;
   background-color: var(--bg-section-light);
+  /* Fundo com radial gradients multicamadas reativos às coordenadas --mouse-x e --mouse-y */
+  background-image: 
+    radial-gradient(
+      circle at var(--mouse-x) var(--mouse-y),
+      rgba(222, 186, 198, 0.42) 0%,
+      rgba(193, 139, 157, 0.22) 28%,
+      rgba(150, 100, 119, 0.10) 48%,
+      transparent 72%
+    ),
+    radial-gradient(
+      circle at calc(100% - var(--mouse-x) * 0.4) calc(100% - var(--mouse-y) * 0.4),
+      rgba(98, 45, 69, 0.08) 0%,
+      transparent 55%
+    );
   min-height: calc(100vh - var(--header-height) - var(--ticker-height));
   min-height: calc(100svh - var(--header-height) - var(--ticker-height));
-  position: relative;
   margin-top: var(--header-height);
   padding: var(--space-md) var(--space-lg);
   display: flex;
@@ -487,7 +505,24 @@ button {
   justify-content: center;
   overflow: hidden;
   box-sizing: border-box;
-  transition: var(--theme-transition);
+  transition: var(--theme-transition), background-color 0.4s ease;
+}
+
+[data-theme="dark"] .section-hero-ref {
+  background-color: #160F14;
+  background-image: 
+    radial-gradient(
+      circle at var(--mouse-x) var(--mouse-y),
+      rgba(168, 90, 117, 0.28) 0%,
+      rgba(98, 45, 69, 0.20) 30%,
+      rgba(42, 14, 24, 0.12) 52%,
+      transparent 75%
+    ),
+    radial-gradient(
+      circle at calc(100% - var(--mouse-x) * 0.5) calc(100% - var(--mouse-y) * 0.5),
+      rgba(98, 45, 69, 0.18) 0%,
+      transparent 60%
+    );
 }
 
 .ref-hero-grid {
@@ -575,10 +610,9 @@ button {
 }
 
 /* ==========================================================================
-   COLUNA VISUAL HERO — O PORTAL GÓTICO DE SAINT CLAIRE (PROMPT 19)
-   Direção de Arte Premium: Formato em arco arquitetônico inspirado nas abóbadas
-   da Academia Saint Claire, com camadas sutis de profundidade, silhueta em ogiva
-   e valorização integral das seis alunas sem poluição visual.
+   COLUNA VISUAL HERO — KEY ART EDITORIAL DOS PERSONAGENS (PROMPT 20)
+   Moldura elegante e contínua com cantos perfeitamente harmonizados, sombra
+   difusa e natural, acabamento com filete suave e integração perfeita com a iluminação.
    ========================================================================== */
 .ref-hero-visual-col {
   position: relative;
@@ -590,94 +624,94 @@ button {
   z-index: 2;
 }
 
-/* Container do Portal Key Art */
+/* Container da Key Art */
 .ref-hero-keyart-portal {
   position: relative;
   width: 100%;
-  max-width: 390px;
-  height: 525px;
+  max-width: 395px;
+  height: 530px;
   display: flex;
   align-items: center;
   justify-content: center;
 }
 
-/* 1. Aura Atmosférica — Brilho Difuso em Vinho / Malva */
+/* 1. Iluminação Ambiente Suave / Glow Atmosférico Difuso */
 .ref-hero-portal-glow {
   position: absolute;
   top: 50%;
   left: 50%;
-  transform: translate(-50%, -48%);
-  width: 106%;
-  height: 104%;
-  border-radius: 220px 220px 48px 48px;
-  background: radial-gradient(ellipse at 50% 40%, rgba(168, 90, 117, 0.32) 0%, rgba(98, 45, 69, 0.15) 55%, transparent 75%);
-  filter: blur(44px);
+  transform: translate(-50%, -50%);
+  width: 110%;
+  height: 108%;
+  border-radius: 40px;
+  background: radial-gradient(
+    ellipse at 50% 45%, 
+    rgba(193, 139, 157, 0.28) 0%, 
+    rgba(150, 100, 119, 0.14) 45%, 
+    transparent 72%
+  );
+  filter: blur(36px);
   pointer-events: none;
   z-index: 0;
-  transition: var(--theme-transition);
+  transition: opacity 0.4s ease, filter 0.4s ease;
 }
 
 [data-theme="dark"] .ref-hero-portal-glow {
-  background: radial-gradient(ellipse at 50% 40%, rgba(168, 90, 117, 0.42) 0%, rgba(98, 45, 69, 0.26) 55%, transparent 78%);
-  filter: blur(52px);
+  background: radial-gradient(
+    ellipse at 50% 45%, 
+    rgba(168, 90, 117, 0.35) 0%, 
+    rgba(98, 45, 69, 0.22) 50%, 
+    transparent 76%
+  );
+  filter: blur(44px);
 }
 
-/* 2. Camada Traseira (Backplane Arquitetônico Offset em Camadas Sutis) */
-.ref-hero-portal-backplane {
-  position: absolute;
-  top: 0;
-  left: 0;
-  width: 100%;
-  height: 100%;
-  border-radius: 220px 220px 32px 32px;
-  background: linear-gradient(155deg, rgba(98, 45, 69, 0.40) 0%, rgba(42, 14, 24, 0.65) 100%);
-  border: 1.5px solid rgba(193, 139, 157, 0.30);
-  transform: translate(14px, 14px);
-  box-shadow: 0 20px 40px rgba(22, 15, 20, 0.20);
-  pointer-events: none;
-  z-index: 1;
-  transition: transform 0.45s cubic-bezier(0.16, 1, 0.3, 1), border-color 0.4s ease, box-shadow 0.4s ease;
-}
-
-[data-theme="dark"] .ref-hero-portal-backplane {
-  background: linear-gradient(155deg, rgba(98, 45, 69, 0.55) 0%, rgba(22, 15, 20, 0.85) 100%);
-  border-color: rgba(193, 139, 157, 0.25);
-  box-shadow: 0 24px 48px rgba(0, 0, 0, 0.45);
-}
-
-/* 3. Moldura Principal em Arco Gótico (Saint Claire Cathedral Arch) */
+/* 2. Moldura Principal Refinada — Formato Editorial com Curvatura Elegante */
 .ref-hero-portal-frame {
   position: relative;
   width: 100%;
   height: 100%;
-  border-radius: 220px 220px 28px 28px;
+  /* Formato orgânico e sofisticado: topo suavemente abobadado e cantos elegantes */
+  border-radius: 64px 64px 28px 28px;
   overflow: hidden;
   z-index: 2;
-  border: 1.5px solid rgba(193, 139, 157, 0.42);
-  background: linear-gradient(180deg, #2A1521 0%, #160F14 100%);
+  /* Borda ultrafina e sutil em rosa antigo / malva */
+  border: 1px solid rgba(193, 139, 157, 0.35);
+  background: #1A1017;
+  /* Sombra difusa, leve e natural sem blocos deslocados pesados */
   box-shadow: 
-    0 24px 50px -10px rgba(22, 15, 20, 0.35),
-    0 4px 14px rgba(22, 15, 20, 0.12),
-    inset 0 1px 0 rgba(255, 255, 255, 0.18),
-    inset 0 0 0 1px rgba(193, 139, 157, 0.15);
-  transition: transform 0.45s cubic-bezier(0.16, 1, 0.3, 1), box-shadow 0.45s ease, border-color 0.45s ease;
+    0 18px 45px -8px rgba(43, 25, 35, 0.18),
+    0 4px 16px rgba(43, 25, 35, 0.08),
+    inset 0 1px 0 rgba(255, 255, 255, 0.15),
+    inset 0 0 0 1px rgba(193, 139, 157, 0.12);
+  transition: transform 0.45s cubic-bezier(0.16, 1, 0.3, 1), box-shadow 0.45s ease, border-color 0.4s ease;
   will-change: transform;
 }
 
-/* Microinteração de Profundidade Suave ao Passar o Mouse */
-.ref-hero-keyart-portal:hover .ref-hero-portal-frame {
-  transform: translateY(-6px);
-  border-color: rgba(193, 139, 157, 0.65);
+[data-theme="dark"] .ref-hero-portal-frame {
+  border-color: rgba(193, 139, 157, 0.28);
   box-shadow: 
-    0 30px 60px -10px rgba(22, 15, 20, 0.45),
-    0 8px 20px rgba(98, 45, 69, 0.25),
-    inset 0 1px 0 rgba(255, 255, 255, 0.28),
-    inset 0 0 0 1px rgba(193, 139, 157, 0.30);
+    0 22px 55px -10px rgba(0, 0, 0, 0.55),
+    0 6px 20px rgba(0, 0, 0, 0.25),
+    inset 0 1px 0 rgba(255, 255, 255, 0.10),
+    inset 0 0 0 1px rgba(193, 139, 157, 0.18);
 }
 
-.ref-hero-keyart-portal:hover .ref-hero-portal-backplane {
-  transform: translate(16px, 16px);
+/* Microinteração de profundidade suave e fluida */
+.ref-hero-keyart-portal:hover .ref-hero-portal-frame {
+  transform: translateY(-5px);
+  border-color: rgba(193, 139, 157, 0.55);
+  box-shadow: 
+    0 26px 55px -10px rgba(43, 25, 35, 0.24),
+    0 8px 24px rgba(98, 45, 69, 0.16),
+    inset 0 1px 0 rgba(255, 255, 255, 0.22);
+}
+
+[data-theme="dark"] .ref-hero-keyart-portal:hover .ref-hero-portal-frame {
   border-color: rgba(193, 139, 157, 0.45);
+  box-shadow: 
+    0 30px 65px -10px rgba(0, 0, 0, 0.65),
+    0 10px 28px rgba(98, 45, 69, 0.25);
 }
 
 /* Imagem Original das Seis Alunas — Enquadramento e Presença */
@@ -691,7 +725,7 @@ button {
 }
 
 .ref-hero-keyart-portal:hover .ref-hero-portal-img {
-  transform: scale(1.03);
+  transform: scale(1.025);
 }
 
 /* Fusão Cinematográfica na Base — Transição Suave */
@@ -702,9 +736,9 @@ button {
   background: linear-gradient(
     180deg, 
     rgba(22, 15, 20, 0) 0%, 
-    rgba(22, 15, 20, 0) 58%, 
-    rgba(22, 15, 20, 0.38) 78%, 
-    rgba(22, 15, 20, 0.88) 100%
+    rgba(22, 15, 20, 0) 60%, 
+    rgba(22, 15, 20, 0.35) 80%, 
+    rgba(22, 15, 20, 0.82) 100%
   );
 }
 
@@ -2107,8 +2141,7 @@ button {
   .ref-hero-action-row { justify-content: center; }
   .ref-hero-visual-col { max-width: 380px; margin: 0 auto; }
   .ref-hero-keyart-portal { max-width: 360px; height: 490px; }
-  .ref-hero-portal-backplane { border-radius: 200px 200px 28px 28px; transform: translate(11px, 11px); }
-  .ref-hero-portal-frame { border-radius: 200px 200px 24px 24px; }
+  .ref-hero-portal-frame { border-radius: 56px 56px 24px 24px; }
   .ref-hero-portal-img { object-position: center 8%; }
   .pink-grid-container { grid-template-columns: 1fr; gap: var(--space-xl); }
   .dark-panel-grid { grid-template-columns: 1fr; gap: var(--space-xl); }
@@ -2148,8 +2181,7 @@ button {
   /* Hero Key Art em Tablets e Dispositivos Médios */
   .ref-hero-visual-col { max-width: 340px; margin: 0 auto; }
   .ref-hero-keyart-portal { max-width: 330px; height: 450px; }
-  .ref-hero-portal-backplane { border-radius: 180px 180px 24px 24px; transform: translate(9px, 9px); }
-  .ref-hero-portal-frame { border-radius: 180px 180px 20px 20px; }
+  .ref-hero-portal-frame { border-radius: 48px 48px 20px 20px; }
   .ref-hero-portal-img { object-position: center 8%; }
   .phone-callout-tag { display: none; }
 }
@@ -2160,8 +2192,7 @@ button {
   /* Hero Key Art em Telas Pequenas */
   .ref-hero-visual-col { max-width: 290px; margin: 0 auto; }
   .ref-hero-keyart-portal { max-width: 280px; height: 390px; }
-  .ref-hero-portal-backplane { border-radius: 150px 150px 20px 20px; transform: translate(6px, 6px); }
-  .ref-hero-portal-frame { border-radius: 150px 150px 18px 18px; }
+  .ref-hero-portal-frame { border-radius: 40px 40px 18px 18px; }
   .ref-hero-portal-img { object-position: center 6%; }
 
   .nav-link--cta { margin-left: 0; }
