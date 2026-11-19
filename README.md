@@ -1,6 +1,9 @@
-# Rebecca’s Mystery — Site Oficial
+# Rebecca’s Mystery — Wiki Oficial
 
-Site oficial, moderno, cinematográfico e totalmente responsivo do jogo narrativo indie **Rebecca’s Mystery**, ambientado na fictícia e tradicional Academia Saint Claire, com foco na temática: **“O impacto do bullying nas relações sociais”**.
+Site wiki oficial, moderno, cinematográfico e totalmente responsivo do jogo narrativo indie **Rebecca’s Mystery**, ambientado na fictícia e tradicional Academia Saint Claire, com foco na temática: **“O impacto do bullying nas relações sociais”**.
+
+- 📖 **Wiki Oficial:** [https://rebeccas-mystery-wiki.vercel.app/](https://rebeccas-mystery-wiki.vercel.app/)
+- 🎮 **Jogo Oficial (Projeto Paralelo):** [https://rebeccasmystery.vercel.app/](https://rebeccasmystery.vercel.app/)
 
 ---
 
