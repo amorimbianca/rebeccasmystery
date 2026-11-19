@@ -18,7 +18,6 @@
 html {
   scroll-behavior: smooth;
   font-size: 16px;
-  overflow-x: hidden;
   background-color: var(--bg-section-light);
 }
 
@@ -28,7 +27,6 @@ body {
   font-family: var(--font-sans);
   font-weight: 400;
   line-height: 1.55;
-  overflow-x: hidden;
   position: relative;
   -webkit-font-smoothing: antialiased;
   transition: var(--theme-transition);
@@ -2221,3 +2219,74 @@ button {
   }
   .cinema-intro { display: none !important; }
 }
+
+/* ==========================================================================
+   TRANSIÇÃO EDITORIAL DE EMPILHAMENTO DE SEÇÕES (STACKING PANELS — S/C LABS)
+   As seções deslizam sobrepondo-se mutuamente no scroll (curtain reveal).
+   ========================================================================== */
+#main-content {
+  position: relative;
+  width: 100%;
+}
+
+/* Regra mestre de sobreposição para as seções principais */
+.section-hero-ref,
+.section-pink-showcase,
+.section-overlap-panel-wrapper,
+.section-investigation-phone,
+.section-pink-evidence,
+.section-play-final {
+  position: sticky;
+  top: var(--header-height, 68px);
+  min-height: calc(100vh - var(--header-height, 68px));
+  box-sizing: border-box;
+  background-clip: padding-box;
+}
+
+/* Sombra de lâmina profunda e corte nítido estilo S/C Aesthetic Labs */
+.section-pink-showcase,
+.section-overlap-panel-wrapper,
+.section-investigation-phone,
+.section-pink-evidence,
+.section-play-final {
+  box-shadow: 0 -25px 55px rgba(0, 0, 0, 0.75), 0 -1px 0 rgba(255, 255, 255, 0.12);
+}
+
+/* Z-Index progressivo para garantir a ordem de sobreposição perfeita */
+.section-hero-ref {
+  z-index: 1;
+}
+
+.ref-marquee-strip {
+  position: relative;
+  z-index: 2;
+}
+
+.section-pink-showcase {
+  z-index: 3;
+}
+
+.section-overlap-panel-wrapper {
+  z-index: 4;
+  margin-top: 0 !important;
+  padding-top: var(--space-2xl);
+}
+
+.section-investigation-phone {
+  z-index: 5;
+}
+
+.section-pink-evidence {
+  z-index: 6;
+}
+
+.section-play-final {
+  z-index: 7;
+}
+
+.site-footer {
+  position: relative;
+  z-index: 8;
+  box-shadow: 0 -25px 55px rgba(0, 0, 0, 0.85);
+}
+
