@@ -168,6 +168,8 @@
          SEÇÃO 1 — HERO SECTION (ORGANIZADA, TEXTOS CONCISOS, COMPOSIÇÃO EDITORIAL)
          ========================================================================== -->
     <section class="section-hero-ref" id="inicio">
+      <!-- Camada 1 (Parallax Fundo): Elemento interno dedicado para preservar position: sticky do Stacking Panels -->
+      <div class="hero-parallax-bg" aria-hidden="true"></div>
 
       <div class="container ref-hero-grid">
         
@@ -212,10 +214,12 @@
 
             <!-- Moldura Principal Refinada / Key Visual dos Personagens -->
             <div class="ref-hero-portal-frame">
-              <img src="assets/images/characters/six_characters_hero.png" 
-                   alt="As seis alunas e protagonistas da Academia Saint Claire reunidas em Rebecca's Mystery" 
-                   class="ref-hero-portal-img"
-                   loading="eager">
+              <div class="ref-hero-portal-media">
+                <img src="assets/images/characters/six_characters_hero.png" 
+                     alt="As seis alunas e protagonistas da Academia Saint Claire reunidas em Rebecca's Mystery" 
+                     class="ref-hero-portal-img"
+                     loading="eager">
+              </div>
               <!-- Fusão Cinematográfica na Base -->
               <div class="ref-hero-portal-shade" aria-hidden="true"></div>
             </div>

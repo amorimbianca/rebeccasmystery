@@ -48,12 +48,14 @@ function initCinemaPreloader() {
   const allSvgPaths = document.querySelectorAll("#logo-rm-svg .draw-path");
 
   // Hero elements para revelação sequencial pós-intro
+  // Alvo visual no wrapper externo (.ref-hero-visual-col) para nunca sobrescrever
+  // o transform do Parallax em .ref-hero-keyart-portal
   const heroTitle = document.querySelector(".ref-hero-title");
   const heroBadge = document.querySelector(".ref-lead-tag");
   const heroBanner = document.querySelector(".ref-headline-banner");
   const heroDesc = document.querySelector(".ref-hero-desc");
   const heroActions = document.querySelector(".ref-hero-action-row");
-  const heroVisual = document.querySelector(".ref-hero-keyart-portal, .ref-hero-visual-col");
+  const heroVisual = document.querySelector(".ref-hero-visual-col");
 
   // Função para encerrar e remover overlay
   const completeIntro = () => {
@@ -66,7 +68,8 @@ function initCinemaPreloader() {
         y: 0,
         scale: 1,
         duration: 0.35,
-        overwrite: "auto"
+        overwrite: "auto",
+        clearProps: "transform"
       });
     }
     setTimeout(() => {
@@ -407,97 +410,211 @@ function initScrollReveal() {
 }
 
 /* ==========================================================================
-   7. PARALLAX CINEMATOGRÁFICO — HERO & ELEMENTOS (PROMPT 21)
-   Movimento multicamadas suave, cinematográfico e elegante na Hero:
-   - Fundo em velocidade diferente (radial gradient e aura)
-   - Deslocamento sutil na coluna de texto e no portal dos personagens
-   - Efeito de profundidade e leve variação de escala na arte principal
-   - Suporte e adaptação de intensidade para tablets/mobile e prefers-reduced-motion
+   7. PARALLAX MULTICAMADAS NA HERO — INTEGRADO AO STACKING PANELS
+   Quatro camadas com velocidades independentes, desaceleração progressiva na
+   saída da Hero e zero interferência no position: sticky das seções:
+   - Camada 1 (Fundo): .hero-parallax-bg (deslocamento lento + escala suave)
+   - Camada 2 (Imagem Principal): .ref-hero-keyart-portal + .ref-hero-portal-media
+   - Camada 3 (Decorativo Existente): .ref-hero-portal-glow (separação luminosa)
+   - Camada 4 (Textos e Botões): .ref-hero-text-col (movimento mínimo e legível)
    ========================================================================== */
 function initParallaxEffects() {
-  const prefersReduced = window.matchMedia("(prefers-reduced-motion: reduce)").matches || 
-                         document.body.classList.contains("reduce-motion");
-  if (prefersReduced) return;
-
   const heroSection = document.querySelector(".section-hero-ref");
-  const heroTextCol = document.querySelector(".ref-hero-text-col");
-  const heroPortal = document.querySelector(".ref-hero-keyart-portal");
-  const heroGlow = document.querySelector(".ref-hero-portal-glow");
-  const heroImg = document.querySelector(".ref-hero-portal-img");
-  const legacyParallax = document.querySelectorAll(".parallax-element");
+  if (!heroSection) return;
 
-  if (!heroSection && !legacyParallax.length) return;
+  const heroBg = heroSection.querySelector(".hero-parallax-bg");
+  const heroTextCol = heroSection.querySelector(".ref-hero-text-col");
+  const heroPortal = heroSection.querySelector(".ref-hero-keyart-portal");
+  const heroGlow = heroSection.querySelector(".ref-hero-portal-glow");
+  const heroMedia = heroSection.querySelector(".ref-hero-portal-media");
+  const marqueeStrip = document.querySelector(".ref-marquee-strip");
 
-  let ticking = false;
+  const reducedMotionQuery = window.matchMedia("(prefers-reduced-motion: reduce)");
 
-  const onScroll = () => {
-    const scrollY = window.pageYOffset || document.documentElement.scrollTop || 0;
-    const windowWidth = window.innerWidth;
-    const isMobile = windowWidth < 768;
-    const isTablet = windowWidth >= 768 && windowWidth < 1024;
+  const isReducedMotion = () =>
+    reducedMotionQuery.matches || document.body.classList.contains("reduce-motion");
 
-    // Fator de amortecimento conforme o dispositivo (mobile mais sutil, desktop fluido)
-    const intensity = isMobile ? 0.35 : (isTablet ? 0.65 : 1.0);
+  let transitionDistance = 800;
+  let intensity = 1.0;
+  let isMobileViewport = false;
+  let targetProgress = 0;
+  let currentProgress = 0;
+  let rafId = null;
 
-    // O efeito da Hero só processa enquanto ela estiver próxima ao viewport
-    if (heroSection) {
-      const heroHeight = heroSection.offsetHeight;
-      if (scrollY <= heroHeight * 1.5) {
-        // 1. Fundo/iluminação se move em velocidade sutil (-0.08)
-        const bgOffset = (scrollY * -0.08 * intensity).toFixed(2);
-        heroSection.style.setProperty("--hero-parallax-bg", `${bgOffset}px`);
+  const clamp = (val, min, max) => Math.min(max, Math.max(min, val));
 
-        // 2. Coluna de texto se desloca com leve atraso elegante (0.09)
-        if (heroTextCol) {
-          const textOffset = (scrollY * 0.09 * intensity).toFixed(2);
-          heroTextCol.style.setProperty("--hero-text-y", `${textOffset}px`);
-        }
+  // Mede a distância exata até a segunda seção cobrir a Hero (Stacking Panels)
+  const measureMetrics = () => {
+    const w = window.innerWidth;
+    isMobileViewport = w < 768;
+    const isTablet = w >= 768 && w < 1024;
+    intensity = isMobileViewport ? 0.28 : (isTablet ? 0.55 : 1.0);
 
-        // 3. Moldura do portal da imagem se desloca suavemente (0.16) com sutil profundidade de escala
-        if (heroPortal) {
-          const portalOffset = (scrollY * 0.16 * intensity).toFixed(2);
-          const portalScale = Math.max(0.97, (1 - (scrollY * 0.00012 * intensity))).toFixed(4);
-          heroPortal.style.setProperty("--hero-portal-y", `${portalOffset}px`);
-          heroPortal.style.setProperty("--hero-portal-scale", portalScale);
-        }
-
-        // 4. Glow atmosférico se move em velocidade desacoplada para profundidade visual (0.22)
-        if (heroGlow) {
-          const glowOffset = (scrollY * 0.22 * intensity).toFixed(2);
-          heroGlow.style.setProperty("--hero-glow-y", `${glowOffset}px`);
-        }
-
-        // 5. Imagem interna dos personagens tem um deslocamento interno sutil (-0.06), gerando profundidade 3D
-        if (heroImg) {
-          const imgOffset = (scrollY * -0.06 * intensity).toFixed(2);
-          const imgScale = Math.min(1.04, (1 + (scrollY * 0.0001 * intensity))).toFixed(4);
-          heroImg.style.setProperty("--hero-img-y", `${imgOffset}px`);
-          heroImg.style.setProperty("--hero-img-scale", imgScale);
-        }
-      }
-    }
-
-    // Elementos legados genéricos com .parallax-element (se houver)
-    if (legacyParallax.length && windowWidth >= 1024) {
-      legacyParallax.forEach(el => {
-        const speed = parseFloat(el.getAttribute("data-parallax-speed")) || 0.1;
-        const offset = scrollY * speed;
-        el.style.transform = `translate3d(0, ${offset}px, 0)`;
-      });
-    }
-
-    ticking = false;
+    const heroHeight = heroSection.offsetHeight || window.innerHeight;
+    const tickerHeight = marqueeStrip ? marqueeStrip.offsetHeight : 0;
+    transitionDistance = Math.max(320, heroHeight + tickerHeight);
   };
 
-  window.addEventListener("scroll", () => {
-    if (!ticking) {
-      window.requestAnimationFrame(onScroll);
-      ticking = true;
+  // Restaura todas as camadas para posição neutra (acessibilidade / repouso)
+  const resetLayers = () => {
+    if (heroBg) {
+      heroBg.style.setProperty("--hero-bg-y", "0px");
+      heroBg.style.setProperty("--hero-bg-scale", "1.04");
     }
-  }, { passive: true });
+    if (heroTextCol) {
+      heroTextCol.style.setProperty("--hero-text-y", "0px");
+      heroTextCol.style.setProperty("--hero-text-opacity", "1");
+    }
+    if (heroPortal) {
+      heroPortal.style.setProperty("--hero-portal-y", "0px");
+      heroPortal.style.setProperty("--hero-portal-scale", "1");
+    }
+    if (heroGlow) {
+      heroGlow.style.setProperty("--hero-glow-y", "0px");
+      heroGlow.style.setProperty("--hero-glow-scale", "1");
+    }
+    if (heroMedia) {
+      heroMedia.style.setProperty("--hero-img-y", "0px");
+      heroMedia.style.setProperty("--hero-img-scale", "1");
+    }
+  };
 
-  // Executa uma vez no carregamento para posicionamento consistente
-  window.requestAnimationFrame(onScroll);
+  // Aplica os deslocamentos nas 4 camadas com velocidades distintas e desaceleração suave
+  const applyLayers = (progress) => {
+    // Curva ease-out: movimento responsivo no início e desaceleração suave na transição para a Seção 2
+    const eased = 1 - Math.pow(1 - progress, 2.1);
+
+    // CAMADA 1 — FUNDO (mais lento + leve escala para eliminar bordas vazias)
+    if (heroBg) {
+      const bgY = (-34 * eased * intensity).toFixed(2);
+      const bgScale = (1.04 + 0.08 * eased * intensity).toFixed(4);
+      heroBg.style.setProperty("--hero-bg-y", `${bgY}px`);
+      heroBg.style.setProperty("--hero-bg-scale", bgScale);
+    }
+
+    // CAMADA 2 — IMAGEM PRINCIPAL (moldura e arte interna com velocidades independentes)
+    if (heroPortal) {
+      const portalY = (-76 * eased * intensity).toFixed(2);
+      const portalScale = (1 - 0.038 * eased * intensity).toFixed(4);
+      heroPortal.style.setProperty("--hero-portal-y", `${portalY}px`);
+      heroPortal.style.setProperty("--hero-portal-scale", portalScale);
+    }
+
+    if (heroMedia) {
+      // Escala segura sincronizada ao deslocamento interno: garante margem de segurança e zero frestas nas bordas da moldura em qualquer tela
+      const imgScale = (1 + 0.095 * eased * intensity).toFixed(4);
+      const imgY = (14 * eased * intensity).toFixed(2);
+      heroMedia.style.setProperty("--hero-img-y", `${imgY}px`);
+      heroMedia.style.setProperty("--hero-img-scale", imgScale);
+    }
+
+    // CAMADA 3 — ELEMENTO DECORATIVO EXISTENTE (aura atmosférica com separação de plano)
+    if (heroGlow) {
+      const glowY = (26 * eased * intensity).toFixed(2);
+      const glowScale = (1 + 0.10 * eased * intensity).toFixed(4);
+      heroGlow.style.setProperty("--hero-glow-y", `${glowY}px`);
+      heroGlow.style.setProperty("--hero-glow-scale", glowScale);
+    }
+
+    // CAMADA 4 — TEXTOS E BOTÕES (deslocamento mínimo, mantendo máxima legibilidade)
+    if (heroTextCol) {
+      const textY = (-38 * eased * intensity).toFixed(2);
+      const lateFade = progress > 0.55 ? (progress - 0.55) / 0.45 : 0;
+      const textOpacity = isMobileViewport ? 1 : (1 - 0.12 * lateFade * intensity).toFixed(3);
+      heroTextCol.style.setProperty("--hero-text-y", `${textY}px`);
+      heroTextCol.style.setProperty("--hero-text-opacity", `${textOpacity}`);
+    }
+  };
+
+  const stopAnimation = () => {
+    if (rafId !== null) {
+      window.cancelAnimationFrame(rafId);
+      rafId = null;
+    }
+  };
+
+  const tick = () => {
+    if (isReducedMotion()) {
+      stopAnimation();
+      resetLayers();
+      return;
+    }
+
+    const diff = targetProgress - currentProgress;
+    if (Math.abs(diff) < 0.0008) {
+      currentProgress = targetProgress;
+      applyLayers(currentProgress);
+      rafId = null;
+      return;
+    }
+
+    // Interpolação suave para fluidez cinematográfica sem sobrecarregar o scroll
+    currentProgress += diff * 0.18;
+    applyLayers(currentProgress);
+    rafId = window.requestAnimationFrame(tick);
+  };
+
+  const updateTargetFromScroll = (immediate = false) => {
+    if (isReducedMotion()) {
+      stopAnimation();
+      resetLayers();
+      return;
+    }
+
+    const scrollY = window.pageYOffset || document.documentElement.scrollTop || 0;
+    targetProgress = clamp(scrollY / transitionDistance, 0, 1);
+
+    if (immediate) {
+      currentProgress = targetProgress;
+      applyLayers(currentProgress);
+      return;
+    }
+
+    if (rafId === null) {
+      rafId = window.requestAnimationFrame(tick);
+    }
+  };
+
+  const handleScroll = () => updateTargetFromScroll(false);
+
+  const handleResize = () => {
+    measureMetrics();
+    updateTargetFromScroll(true);
+  };
+
+  const handleReducedMotionChange = () => {
+    if (isReducedMotion()) {
+      stopAnimation();
+      resetLayers();
+    } else {
+      measureMetrics();
+      updateTargetFromScroll(true);
+    }
+  };
+
+  // Inicialização única dos listeners necessários
+  measureMetrics();
+  updateTargetFromScroll(true);
+
+  window.addEventListener("scroll", handleScroll, { passive: true });
+  window.addEventListener("resize", handleResize, { passive: true });
+  window.addEventListener("rm:reduced-motion-change", handleReducedMotionChange);
+  if (reducedMotionQuery.addEventListener) {
+    reducedMotionQuery.addEventListener("change", handleReducedMotionChange);
+  }
+
+  // Limpeza garantida de listeners e animações ao descarregar a página
+  const cleanup = () => {
+    stopAnimation();
+    window.removeEventListener("scroll", handleScroll);
+    window.removeEventListener("resize", handleResize);
+    window.removeEventListener("rm:reduced-motion-change", handleReducedMotionChange);
+    if (reducedMotionQuery.removeEventListener) {
+      reducedMotionQuery.removeEventListener("change", handleReducedMotionChange);
+    }
+  };
+
+  window.addEventListener("pagehide", cleanup, { once: true });
 }
 
 /* ==========================================================================
@@ -598,6 +715,7 @@ function initReducedMotion() {
       const isReduced = document.body.classList.toggle("reduce-motion");
       motionBtn.classList.toggle("active", isReduced);
       localStorage.setItem("rm_reduced_motion", isReduced ? "true" : "false");
+      window.dispatchEvent(new CustomEvent("rm:reduced-motion-change", { detail: { reduced: isReduced } }));
     });
   }
 }
