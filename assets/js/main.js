@@ -407,31 +407,97 @@ function initScrollReveal() {
 }
 
 /* ==========================================================================
-   7. PARALLAX SUAVE E SUTIL EM ELEMENTOS FLUTUANTES (DESKTOP)
+   7. PARALLAX CINEMATOGRÁFICO — HERO & ELEMENTOS (PROMPT 21)
+   Movimento multicamadas suave, cinematográfico e elegante na Hero:
+   - Fundo em velocidade diferente (radial gradient e aura)
+   - Deslocamento sutil na coluna de texto e no portal dos personagens
+   - Efeito de profundidade e leve variação de escala na arte principal
+   - Suporte e adaptação de intensidade para tablets/mobile e prefers-reduced-motion
    ========================================================================== */
 function initParallaxEffects() {
-  if (window.innerWidth < 1024) return;
-  if (window.matchMedia("(prefers-reduced-motion: reduce)").matches || document.body.classList.contains("reduce-motion")) return;
+  const prefersReduced = window.matchMedia("(prefers-reduced-motion: reduce)").matches || 
+                         document.body.classList.contains("reduce-motion");
+  if (prefersReduced) return;
 
-  const parallaxElements = document.querySelectorAll(".parallax-element");
-  if (!parallaxElements.length) return;
+  const heroSection = document.querySelector(".section-hero-ref");
+  const heroTextCol = document.querySelector(".ref-hero-text-col");
+  const heroPortal = document.querySelector(".ref-hero-keyart-portal");
+  const heroGlow = document.querySelector(".ref-hero-portal-glow");
+  const heroImg = document.querySelector(".ref-hero-portal-img");
+  const legacyParallax = document.querySelectorAll(".parallax-element");
+
+  if (!heroSection && !legacyParallax.length) return;
 
   let ticking = false;
 
+  const onScroll = () => {
+    const scrollY = window.pageYOffset || document.documentElement.scrollTop || 0;
+    const windowWidth = window.innerWidth;
+    const isMobile = windowWidth < 768;
+    const isTablet = windowWidth >= 768 && windowWidth < 1024;
+
+    // Fator de amortecimento conforme o dispositivo (mobile mais sutil, desktop fluido)
+    const intensity = isMobile ? 0.35 : (isTablet ? 0.65 : 1.0);
+
+    // O efeito da Hero só processa enquanto ela estiver próxima ao viewport
+    if (heroSection) {
+      const heroHeight = heroSection.offsetHeight;
+      if (scrollY <= heroHeight * 1.5) {
+        // 1. Fundo/iluminação se move em velocidade sutil (-0.08)
+        const bgOffset = (scrollY * -0.08 * intensity).toFixed(2);
+        heroSection.style.setProperty("--hero-parallax-bg", `${bgOffset}px`);
+
+        // 2. Coluna de texto se desloca com leve atraso elegante (0.09)
+        if (heroTextCol) {
+          const textOffset = (scrollY * 0.09 * intensity).toFixed(2);
+          heroTextCol.style.setProperty("--hero-text-y", `${textOffset}px`);
+        }
+
+        // 3. Moldura do portal da imagem se desloca suavemente (0.16) com sutil profundidade de escala
+        if (heroPortal) {
+          const portalOffset = (scrollY * 0.16 * intensity).toFixed(2);
+          const portalScale = Math.max(0.97, (1 - (scrollY * 0.00012 * intensity))).toFixed(4);
+          heroPortal.style.setProperty("--hero-portal-y", `${portalOffset}px`);
+          heroPortal.style.setProperty("--hero-portal-scale", portalScale);
+        }
+
+        // 4. Glow atmosférico se move em velocidade desacoplada para profundidade visual (0.22)
+        if (heroGlow) {
+          const glowOffset = (scrollY * 0.22 * intensity).toFixed(2);
+          heroGlow.style.setProperty("--hero-glow-y", `${glowOffset}px`);
+        }
+
+        // 5. Imagem interna dos personagens tem um deslocamento interno sutil (-0.06), gerando profundidade 3D
+        if (heroImg) {
+          const imgOffset = (scrollY * -0.06 * intensity).toFixed(2);
+          const imgScale = Math.min(1.04, (1 + (scrollY * 0.0001 * intensity))).toFixed(4);
+          heroImg.style.setProperty("--hero-img-y", `${imgOffset}px`);
+          heroImg.style.setProperty("--hero-img-scale", imgScale);
+        }
+      }
+    }
+
+    // Elementos legados genéricos com .parallax-element (se houver)
+    if (legacyParallax.length && windowWidth >= 1024) {
+      legacyParallax.forEach(el => {
+        const speed = parseFloat(el.getAttribute("data-parallax-speed")) || 0.1;
+        const offset = scrollY * speed;
+        el.style.transform = `translate3d(0, ${offset}px, 0)`;
+      });
+    }
+
+    ticking = false;
+  };
+
   window.addEventListener("scroll", () => {
     if (!ticking) {
-      window.requestAnimationFrame(() => {
-        const scrollY = window.scrollY;
-        parallaxElements.forEach(el => {
-          const speed = parseFloat(el.getAttribute("data-parallax-speed")) || 0.1;
-          const offset = scrollY * speed;
-          el.style.transform = `translate3d(0, ${offset}px, 0)`;
-        });
-        ticking = false;
-      });
+      window.requestAnimationFrame(onScroll);
       ticking = true;
     }
   }, { passive: true });
+
+  // Executa uma vez no carregamento para posicionamento consistente
+  window.requestAnimationFrame(onScroll);
 }
 
 /* ==========================================================================
