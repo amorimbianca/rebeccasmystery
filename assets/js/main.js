@@ -516,15 +516,7 @@ function initModals() {
   }
 
   const playModal = document.getElementById("play-modal");
-  const playBtn = document.getElementById("btn-play-action");
   const playCloseBtn = document.getElementById("play-modal-close");
-
-  if (playBtn && playModal) {
-    playBtn.addEventListener("click", (e) => {
-      e.preventDefault();
-      openModal(playModal);
-    });
-  }
 
   if (playCloseBtn && playModal) {
     playCloseBtn.addEventListener("click", () => {

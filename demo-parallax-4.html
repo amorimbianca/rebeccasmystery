@@ -1,0 +1,364 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Modelo 4: Parallax Pinned Horizontal Track — Rebecca's Mystery</title>
+  
+  <link rel="icon" type="image/svg+xml" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><circle cx='50' cy='50' r='46' fill='%231a0612' stroke='%23D94689' stroke-width='6'/><text x='50' y='64' font-family='Georgia,serif' font-size='42' font-weight='bold' fill='%23D94689' text-anchor='middle'>RM</text></svg>">
+  <link rel="stylesheet" href="assets/css/variables.css">
+  <link rel="stylesheet" href="assets/css/style.css">
+  <link rel="stylesheet" href="assets/css/demo-parallax.css">
+
+  <script>
+    (function() {
+      try {
+        const savedTheme = localStorage.getItem("rm_theme") || "dark";
+        document.documentElement.setAttribute("data-theme", savedTheme);
+      } catch (e) {
+        document.documentElement.setAttribute("data-theme", "dark");
+      }
+    })();
+  </script>
+</head>
+<body class="has-demo-bar">
+
+  <!-- ==========================================================================
+       BARRA SUPERIOR DO LABORATÓRIO DE PARALLAX
+       ========================================================================== -->
+  <aside class="demo-top-bar" aria-label="Navegador de modelos de parallax">
+    <div class="demo-brand">
+      <span class="demo-badge-tag">LAB PARALLAX</span>
+      <span class="demo-label">Comparação de Modelos de Transição Horizontal</span>
+    </div>
+    <nav class="demo-models-nav">
+      <a href="demo-parallax-1.html" class="demo-tab-link" title="Modelo 1: Scroll Dual Drift">
+        <span>1. Dual Drift (Scroll)</span>
+      </a>
+      <a href="demo-parallax-2.html" class="demo-tab-link" title="Modelo 2: 3D Mouse Depth">
+        <span>2. 3D Depth (Mouse)</span>
+      </a>
+      <a href="demo-parallax-3.html" class="demo-tab-link" title="Modelo 3: Híbrido">
+        <span>3. Híbrido (Scroll + Mouse)</span>
+      </a>
+      <a href="demo-parallax-4.html" class="demo-tab-link active" title="Modelo 4: Pinned Pan Track">
+        <span>4. Pinned Pan Track</span>
+      </a>
+      <a href="index.html" class="demo-tab-link demo-back-link" title="Voltar para a Wiki Principal">
+        <span>← Voltar à Wiki</span>
+      </a>
+    </nav>
+  </aside>
+
+  <!-- Granulação Cinematográfica Sutil -->
+  <div class="film-grain" aria-hidden="true"></div>
+
+  <!-- Header Simplificado para Demonstração -->
+  <header class="site-header" id="main-header">
+    <div class="container nav-container">
+      <a href="index.html" class="site-brand">
+        <div class="brand-crest" aria-hidden="true">
+          <svg viewBox="0 0 24 24"><path d="M12 2L4 6v6c0 5.55 3.84 10.74 8 12 4.16-1.26 8-6.45 8-12V6l-8-4z"/></svg>
+        </div>
+        <div class="brand-text">
+          <span class="brand-title">Rebecca’s Mystery</span>
+          <span class="brand-sub">Modelo 4: Pinned Track</span>
+        </div>
+      </a>
+      <div class="nav-actions">
+        <a href="https://rebeccasmystery.vercel.app/" target="_blank" rel="noopener noreferrer" class="ref-btn-pill ref-btn-pill--pink" style="padding: 6px 16px; font-size: 0.8rem;">
+          <span>Jogar Agora</span> ↗
+        </a>
+      </div>
+    </div>
+  </header>
+
+  <main id="main-content">
+
+    <!-- ==========================================================================
+         HERO SECTION DE ENTRADA
+         ========================================================================== -->
+    <section class="section-hero-ref" id="inicio" style="min-height: 85vh;">
+      <div class="container ref-hero-grid">
+        <div class="ref-hero-text-col">
+          <div class="ref-lead-tag">
+            <span>Dossiê Escolar</span>
+            <span class="ref-tag-pill">Saint Claire</span>
+          </div>
+
+          <h1 class="ref-hero-title">
+            O segredo de <br>
+            <span class="ref-title-box">Saint Claire</span>
+          </h1>
+
+          <p class="ref-headline-banner">
+            O silêncio <span class="ref-highlight-dark">oculta</span> o destino de <span class="ref-highlight-pink">Melissa</span>.
+          </p>
+
+          <p class="ref-hero-desc">
+            Role a página para baixo para entrar no <strong>Pinned Track Horizontal</strong>: a tela fixa temporariamente e revela as alunas em uma esteira horizontal cinematográfica.
+          </p>
+
+          <div class="ref-hero-action-row">
+            <a href="#pinned-showcase" class="ref-btn-pill ref-btn-pill--dark">
+              <span>Rolar para a Esteira Horizontal</span>
+              <span class="ref-btn-icon">↓</span>
+            </a>
+          </div>
+        </div>
+
+        <div class="ref-hero-visual-col">
+          <div class="ref-hero-keyart-portal">
+            <div class="ref-hero-portal-glow" aria-hidden="true"></div>
+            <div class="ref-hero-portal-frame">
+              <img src="assets/images/characters/six_characters_hero.png" 
+                   alt="As seis alunas e protagonistas da Academia Saint Claire reunidas em Rebecca's Mystery" 
+                   class="ref-hero-portal-img"
+                   loading="eager">
+              <div class="ref-hero-portal-shade" aria-hidden="true"></div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- Faixa Ticker -->
+    <div class="ref-marquee-strip" aria-hidden="true">
+      <div class="ref-marquee-inner">
+        <span>MENINAS APOIAM MENINAS?</span>
+        <span class="ref-bullet">&bull;</span>
+        <span>DESLIZE HORIZONTAL DE DOSSIÊS</span>
+        <span class="ref-bullet">&bull;</span>
+        <span>A VERDADE NÃO ECOA NO SILÊNCIO</span>
+      </div>
+    </div>
+
+    <!-- ==========================================================================
+         SEÇÃO FIXADA (PINNED) COM TRACK HORIZONTAL DE PERSONAGENS
+         ========================================================================== -->
+    <section class="model-4-pin-container" id="pinned-showcase">
+      <div class="model-4-sticky-stage" id="sticky-stage">
+        
+        <div style="position: absolute; top: 24px; left: 32px; z-index: 10;">
+          <span class="ref-lead-tag" style="margin-bottom: 4px;">Dossiês em Movimento Lateral</span>
+          <h2 style="font-family: var(--font-display); color: #FFFFFF; font-size: clamp(1.2rem, 2vw, 1.8rem); margin: 0;">
+            Alunas de Saint Claire
+          </h2>
+        </div>
+
+        <div class="model-4-track-strip" id="track-strip">
+          
+          <!-- Card 1: Rebecca -->
+          <div class="model-4-char-card">
+            <img src="assets/images/characters/rebecca.png" alt="Rebecca Miller" class="model-4-char-img">
+            <div class="model-4-char-shade"></div>
+            <div class="model-4-char-info">
+              <span class="model-4-char-role">Protagonista • Turma 3º B</span>
+              <h3 class="model-4-char-name">Rebecca Miller</h3>
+              <p style="font-size: 0.775rem; color: var(--text-light-muted); line-height: 1.4; margin: 0;">
+                Determinada a impedir a tragédia que abalou a Academia.
+              </p>
+            </div>
+          </div>
+
+          <!-- Card 2: Melissa -->
+          <div class="model-4-char-card">
+            <img src="assets/images/characters/melissa.png" alt="Melissa Brooks" class="model-4-char-img">
+            <div class="model-4-char-shade"></div>
+            <div class="model-4-char-info">
+              <span class="model-4-char-role">Vítima Silenciada</span>
+              <h3 class="model-4-char-name">Melissa Brooks</h3>
+              <p style="font-size: 0.775rem; color: var(--text-light-muted); line-height: 1.4; margin: 0;">
+                O epicentro dos segredos e rumores da escola.
+              </p>
+            </div>
+          </div>
+
+          <!-- Card 3: Amanda -->
+          <div class="model-4-char-card">
+            <img src="assets/images/characters/amanda.png" alt="Amanda Vance" class="model-4-char-img">
+            <div class="model-4-char-shade"></div>
+            <div class="model-4-char-info">
+              <span class="model-4-char-role">Líder Estudantil</span>
+              <h3 class="model-4-char-name">Amanda Vance</h3>
+              <p style="font-size: 0.775rem; color: var(--text-light-muted); line-height: 1.4; margin: 0;">
+                Mantém a ordem das alunas com punho de ferro e elegância.
+              </p>
+            </div>
+          </div>
+
+          <!-- Card 4: Beatrice -->
+          <div class="model-4-char-card">
+            <img src="assets/images/characters/beatrice.png" alt="Beatrice Dupont" class="model-4-char-img">
+            <div class="model-4-char-shade"></div>
+            <div class="model-4-char-info">
+              <span class="model-4-char-role">Observadora Silenciosa</span>
+              <h3 class="model-4-char-name">Beatrice Dupont</h3>
+              <p style="font-size: 0.775rem; color: var(--text-light-muted); line-height: 1.4; margin: 0;">
+                Registra cada detalhe em seus cadernos confidencias.
+              </p>
+            </div>
+          </div>
+
+          <!-- Card 5: Chloé -->
+          <div class="model-4-char-card">
+            <img src="assets/images/characters/chloe.png" alt="Chloé Valois" class="model-4-char-img">
+            <div class="model-4-char-shade"></div>
+            <div class="model-4-char-info">
+              <span class="model-4-char-role">A Influente</span>
+              <h3 class="model-4-char-name">Chloé Valois</h3>
+              <p style="font-size: 0.775rem; color: var(--text-light-muted); line-height: 1.4; margin: 0;">
+                Seus sussurros pelo corredor decidem reputações.
+              </p>
+            </div>
+          </div>
+
+          <!-- Card 6: Diana -->
+          <div class="model-4-char-card">
+            <img src="assets/images/characters/diana.png" alt="Diana Foster" class="model-4-char-img">
+            <div class="model-4-char-shade"></div>
+            <div class="model-4-char-info">
+              <span class="model-4-char-role">A Investigadora Cética</span>
+              <h3 class="model-4-char-name">Diana Foster</h3>
+              <p style="font-size: 0.775rem; color: var(--text-light-muted); line-height: 1.4; margin: 0;">
+                Busca provas materiais acima de quaisquer emoções.
+              </p>
+            </div>
+          </div>
+
+        </div>
+
+        <div style="position: absolute; bottom: 20px; right: 32px; z-index: 10; display: flex; align-items: center; gap: 8px;">
+          <span style="font-size: 0.75rem; color: var(--color-rose-aged); text-transform: uppercase; letter-spacing: 0.1em;">
+            Progresso da Esteira:
+          </span>
+          <span id="track-percent-label" style="font-weight: 700; color: #FFFFFF; font-family: monospace;">0%</span>
+        </div>
+
+      </div>
+    </section>
+
+    <!-- Seção Jogar Direto -->
+    <section class="section-play-final" id="jogar" style="padding: 80px 0 120px;">
+      <div class="container">
+        <div class="play-card-banner">
+          <div class="play-backdrop-visual">
+            <img src="assets/images/play_visual.jpg" alt="Biblioteca de Saint Claire">
+            <div class="play-backdrop-overlay"></div>
+          </div>
+          <div class="play-card-inner">
+            <span class="ref-lead-tag">Acesso Direto</span>
+            <h2 class="play-title-ref">Pronto para Jogar?</h2>
+            <p class="play-desc-ref">O jogo oficial está hospedado no projeto paralelo.</p>
+            <div class="play-btn-cluster">
+              <a href="https://rebeccasmystery.vercel.app/" target="_blank" rel="noopener noreferrer" class="ref-btn-pill ref-btn-pill--pink btn-play-large">
+                <span>Jogar Rebecca’s Mystery</span>
+                <span class="ref-btn-icon">▶</span>
+              </a>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+  </main>
+
+  <!-- ==========================================================================
+       PAINEL HUD DE TELEMETRIA E CONTROLE EM TEMPO REAL
+       ========================================================================== -->
+  <aside class="demo-hud-panel" id="hud-panel">
+    <div class="demo-hud-header" id="hud-header">
+      <div class="demo-hud-title">
+        <span class="demo-hud-dot"></span>
+        <span>Telemetria: Pinned Track</span>
+      </div>
+      <button type="button" class="demo-hud-toggle-btn" id="hud-toggle" aria-label="Minimizar painel">▾</button>
+    </div>
+    <p class="demo-hud-desc">
+      O scroll vertical conduz o deslocamento horizontal contínuo da esteira.
+    </p>
+    <div class="demo-hud-metrics">
+      <div class="demo-hud-metric-row">
+        <span class="demo-hud-metric-name">Scroll Global Y:</span>
+        <span class="demo-hud-metric-val" id="val-scroll-y">0px</span>
+      </div>
+      <div class="demo-hud-metric-row">
+        <span class="demo-hud-metric-name">Progresso da Trilha:</span>
+        <span class="demo-hud-metric-val" id="val-track-progress">0%</span>
+      </div>
+      <div class="demo-hud-metric-row">
+        <span class="demo-hud-metric-name">Deslocamento X:</span>
+        <span class="demo-hud-metric-val" id="val-track-x">0px</span>
+      </div>
+    </div>
+  </aside>
+
+  <!-- Script do Modelo 4: Pinned Track -->
+  <script>
+    (function() {
+      const pinContainer = document.getElementById("pinned-showcase");
+      const trackStrip = document.getElementById("track-strip");
+      const percentLabel = document.getElementById("track-percent-label");
+      const valScrollY = document.getElementById("val-scroll-y");
+      const valProgress = document.getElementById("val-track-progress");
+      const valTrackX = document.getElementById("val-track-x");
+
+      let ticking = false;
+
+      function updateTrack() {
+        if (!pinContainer || !trackStrip) return;
+
+        const rect = pinContainer.getBoundingClientRect();
+        const containerHeight = pinContainer.offsetHeight;
+        const windowHeight = window.innerHeight;
+        const scrollY = window.pageYOffset || document.documentElement.scrollTop || 0;
+
+        // Distância percorrida dentro do container fixado
+        const scrollDist = -rect.top;
+        const maxScroll = containerHeight - windowHeight;
+
+        let progress = 0;
+        if (maxScroll > 0) {
+          progress = Math.min(1, Math.max(0, scrollDist / maxScroll));
+        }
+
+        const trackWidth = trackStrip.scrollWidth;
+        const visibleWidth = trackStrip.parentElement.clientWidth;
+        const maxTranslate = Math.max(0, trackWidth - visibleWidth + 80);
+
+        const currentX = -(progress * maxTranslate).toFixed(1);
+        trackStrip.style.setProperty("--track-x", `${currentX}px`);
+
+        const percent = `${Math.round(progress * 100)}%`;
+        if (percentLabel) percentLabel.textContent = percent;
+        if (valScrollY) valScrollY.textContent = `${Math.round(scrollY)}px`;
+        if (valProgress) valProgress.textContent = percent;
+        if (valTrackX) valTrackX.textContent = `${currentX}px`;
+
+        ticking = false;
+      }
+
+      window.addEventListener("scroll", () => {
+        if (!ticking) {
+          window.requestAnimationFrame(updateTrack);
+          ticking = true;
+        }
+      }, { passive: true });
+
+      window.addEventListener("resize", updateTrack);
+      updateTrack();
+
+      // HUD Toggle Minimize
+      const hudToggle = document.getElementById("hud-toggle");
+      const hudPanel = document.getElementById("hud-panel");
+      const hudHeader = document.getElementById("hud-header");
+      if (hudHeader && hudPanel) {
+        hudHeader.addEventListener("click", function() {
+          hudPanel.classList.toggle("minimized");
+          if (hudToggle) hudToggle.textContent = hudPanel.classList.contains("minimized") ? "▴" : "▾";
+        });
+      }
+    })();
+  </script>
+</body>
+</html>
