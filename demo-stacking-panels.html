@@ -1,0 +1,647 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Rebecca's Mystery — Stacking Panels (Estilo S/C Aesthetic Labs)</title>
+  
+  <link rel="icon" type="image/svg+xml" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><circle cx='50' cy='50' r='46' fill='%231a0612' stroke='%23D94689' stroke-width='6'/><text x='50' y='64' font-family='Georgia,serif' font-size='42' font-weight='bold' fill='%23D94689' text-anchor='middle'>RM</text></svg>">
+  <link rel="stylesheet" href="assets/css/variables.css">
+
+  <style>
+    /* ==========================================================================
+       ESTILO EDITORIAL MINIMALISTA & ESTRUTURA STACKING (S/C LABS INSPIRED)
+       ========================================================================== */
+    * {
+      box-sizing: border-box;
+      margin: 0;
+      padding: 0;
+    }
+
+    html, body {
+      background-color: #0E030A;
+      color: #F7F0EF;
+      font-family: var(--font-body, "Montserrat", sans-serif);
+      scroll-behavior: smooth;
+    }
+
+    /* Header Fixo e Elegante em Linha Minimalista */
+    .sc-header {
+      position: fixed;
+      top: 0;
+      left: 0;
+      right: 0;
+      height: 64px;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      padding: 0 clamp(20px, 4vw, 50px);
+      z-index: 1000;
+      background: rgba(14, 3, 10, 0.4);
+      backdrop-filter: blur(16px);
+      -webkit-backdrop-filter: blur(16px);
+      border-bottom: 1px solid rgba(255, 255, 255, 0.08);
+      transition: background 0.3s ease;
+    }
+
+    .sc-brand {
+      font-family: var(--font-display, "Cinzel", serif);
+      font-size: 0.85rem;
+      letter-spacing: 0.22em;
+      text-transform: uppercase;
+      font-weight: 700;
+      color: #D94689;
+      display: flex;
+      align-items: center;
+      gap: 10px;
+    }
+
+    .sc-brand-sub {
+      color: rgba(255, 255, 255, 0.4);
+      font-size: 0.7rem;
+      letter-spacing: 0.15em;
+    }
+
+    .sc-nav-links {
+      display: flex;
+      align-items: center;
+      gap: 24px;
+    }
+
+    .sc-nav-link {
+      font-size: 0.75rem;
+      letter-spacing: 0.15em;
+      text-transform: uppercase;
+      color: rgba(255, 255, 255, 0.7);
+      text-decoration: none;
+      transition: color 0.2s ease;
+    }
+
+    .sc-nav-link:hover {
+      color: #FFFFFF;
+    }
+
+    .sc-btn-play {
+      background: #D94689;
+      color: #FFFFFF;
+      padding: 8px 18px;
+      border-radius: 999px;
+      font-size: 0.75rem;
+      font-weight: 600;
+      letter-spacing: 0.1em;
+      text-transform: uppercase;
+      text-decoration: none;
+      transition: transform 0.2s ease, background 0.2s ease;
+    }
+
+    .sc-btn-play:hover {
+      background: #E85B9E;
+      transform: translateY(-1px);
+    }
+
+    /* ==========================================================================
+       CONTAINER DAS LÂMINAS DE EMPILHAMENTO (STACKING PANELS)
+       ========================================================================== */
+    .stack-container {
+      position: relative;
+      width: 100%;
+    }
+
+    /* Cada painel é fixado (sticky) no topo da tela */
+    .panel {
+      position: sticky;
+      top: 0;
+      height: 100vh;
+      width: 100vw;
+      overflow: hidden;
+      display: flex;
+      flex-direction: column;
+      justify-content: space-between;
+      padding: clamp(80px, 11vh, 110px) clamp(24px, 5vw, 70px) 40px;
+      box-sizing: border-box;
+      /* Sombra no topo para dar o relevo de lâmina cobrindo a anterior */
+      box-shadow: 0 -25px 60px rgba(0, 0, 0, 0.95);
+    }
+
+    /* Linha divisória superior sutil como no S/C Aesthetic Labs */
+    .panel::before {
+      content: '';
+      position: absolute;
+      top: 0;
+      left: 0;
+      right: 0;
+      height: 1px;
+      background: rgba(255, 255, 255, 0.12);
+      z-index: 10;
+    }
+
+    /* ==========================================================================
+       PAINEL 1: HERO COM A ARTE DAS ALUNAS EM TELA CHEIA (Z-INDEX: 1)
+       ========================================================================== */
+    .panel-1 {
+      z-index: 1;
+      background: radial-gradient(circle at 60% 40%, rgba(98, 45, 69, 0.5) 0%, rgba(22, 15, 20, 0.95) 70%, #0E030A 100%);
+    }
+
+    .panel-1-bg-img {
+      position: absolute;
+      inset: 0;
+      width: 100%;
+      height: 100%;
+      background: url('assets/images/saint_claire_hero.jpg') center/cover no-repeat;
+      opacity: 0.25;
+      filter: saturate(0.6) contrast(1.2);
+      pointer-events: none;
+    }
+
+    /* Arte dos 6 Personagens em Destaque Cênico Central */
+    .panel-1-characters-art {
+      position: absolute;
+      bottom: 0;
+      right: clamp(10px, 6vw, 80px);
+      height: 90vh;
+      max-width: 65vw;
+      object-fit: contain;
+      object-position: bottom right;
+      z-index: 2;
+      filter: drop-shadow(0 20px 40px rgba(0, 0, 0, 0.95));
+      pointer-events: none;
+    }
+
+    .hero-meta-row {
+      position: relative;
+      z-index: 3;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+      padding-bottom: 14px;
+    }
+
+    .meta-tag {
+      font-size: 0.72rem;
+      letter-spacing: 0.22em;
+      text-transform: uppercase;
+      color: rgba(255, 255, 255, 0.5);
+    }
+
+    .meta-tag span {
+      color: #D94689;
+      font-weight: 700;
+    }
+
+    .hero-lead-headline {
+      position: relative;
+      z-index: 3;
+      max-width: 620px;
+      margin: auto 0;
+    }
+
+    .hero-lead-headline h1 {
+      font-family: var(--font-display, "Cinzel", serif);
+      font-size: clamp(2.4rem, 4.8vw, 4.8rem);
+      font-weight: 900;
+      line-height: 1.05;
+      letter-spacing: 0.02em;
+      text-transform: uppercase;
+      color: #FFFFFF;
+      margin-bottom: 24px;
+    }
+
+    .hero-lead-headline p {
+      font-size: clamp(0.95rem, 1.2vw, 1.15rem);
+      color: rgba(255, 255, 255, 0.75);
+      line-height: 1.6;
+      max-width: 480px;
+    }
+
+    .hero-footer-hint {
+      position: relative;
+      z-index: 3;
+      display: flex;
+      justify-content: space-between;
+      align-items: flex-end;
+    }
+
+    .scroll-cta {
+      display: flex;
+      align-items: center;
+      gap: 12px;
+      font-size: 0.75rem;
+      letter-spacing: 0.2em;
+      text-transform: uppercase;
+      color: #C18B9D;
+    }
+
+    .scroll-arrow-anim {
+      display: inline-block;
+      animation: bounceDown 1.8s infinite ease-in-out;
+    }
+
+    @keyframes bounceDown {
+      0%, 100% { transform: translateY(0); }
+      50% { transform: translateY(6px); }
+    }
+
+    /* ==========================================================================
+       PAINEL 2: TIPOGRAFIA EDITORIAL GIGANTE (Z-INDEX: 2) — S/C LABS STYLE
+       ========================================================================== */
+    .panel-2 {
+      z-index: 2;
+      background-color: #14040E;
+    }
+
+    .panel-header-grid {
+      display: grid;
+      grid-template-columns: repeat(4, 1fr);
+      gap: 20px;
+      border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+      padding-bottom: 14px;
+    }
+
+    .column-header-item {
+      font-size: 0.72rem;
+      letter-spacing: 0.18em;
+      text-transform: uppercase;
+    }
+
+    .column-header-item .col-num {
+      color: #D94689;
+      font-weight: 700;
+      margin-right: 6px;
+    }
+
+    .column-header-item .col-title {
+      color: rgba(255, 255, 255, 0.5);
+    }
+
+    .huge-statement-content {
+      margin: auto 0;
+      max-width: 1100px;
+    }
+
+    .statement-title {
+      font-family: var(--font-display, "Cinzel", serif);
+      font-size: clamp(2.5rem, 5.5vw, 5.5rem);
+      font-weight: 900;
+      line-height: 1.05;
+      text-transform: uppercase;
+      color: #FFFFFF;
+      letter-spacing: 0.02em;
+      margin-bottom: 30px;
+    }
+
+    .statement-split-desc {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 60px;
+      max-width: 900px;
+      color: rgba(255, 255, 255, 0.75);
+      font-size: clamp(0.95rem, 1.15vw, 1.1rem);
+      line-height: 1.7;
+    }
+
+    /* ==========================================================================
+       PAINEL 3: O DOSSIÊ DAS ALUNAS / LINHA DE INVESTIGAÇÃO (Z-INDEX: 3)
+       ========================================================================== */
+    .panel-3 {
+      z-index: 3;
+      background-color: #180812;
+    }
+
+    .students-cards-deck {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 24px;
+      margin: auto 0;
+    }
+
+    .student-card {
+      background: rgba(38, 12, 29, 0.45);
+      border: 1px solid rgba(255, 255, 255, 0.08);
+      border-radius: 16px;
+      padding: 30px;
+      transition: border-color 0.3s ease, transform 0.3s ease;
+    }
+
+    .student-card:hover {
+      border-color: #D94689;
+      transform: translateY(-6px);
+    }
+
+    .student-card-tag {
+      font-size: 0.68rem;
+      letter-spacing: 0.2em;
+      text-transform: uppercase;
+      color: #D94689;
+      font-weight: 700;
+      margin-bottom: 12px;
+      display: block;
+    }
+
+    .student-card h3 {
+      font-family: var(--font-display, "Cinzel", serif);
+      font-size: 1.4rem;
+      color: #FFFFFF;
+      margin-bottom: 12px;
+    }
+
+    .student-card p {
+      font-size: 0.88rem;
+      color: rgba(255, 255, 255, 0.65);
+      line-height: 1.6;
+    }
+
+    /* ==========================================================================
+       PAINEL 4: O CLÍMAX / ACESSO AO JOGO (Z-INDEX: 4)
+       ========================================================================== */
+    .panel-4 {
+      z-index: 4;
+      background: radial-gradient(circle at center, #260C1D 0%, #0E030A 90%);
+      text-align: center;
+      align-items: center;
+    }
+
+    .play-final-box {
+      margin: auto;
+      max-width: 720px;
+    }
+
+    .play-final-box h2 {
+      font-family: var(--font-display, "Cinzel", serif);
+      font-size: clamp(2.6rem, 5vw, 4.8rem);
+      font-weight: 900;
+      line-height: 1.1;
+      text-transform: uppercase;
+      color: #FFFFFF;
+      margin-bottom: 20px;
+    }
+
+    .play-final-box p {
+      font-size: 1.1rem;
+      color: rgba(255, 255, 255, 0.75);
+      line-height: 1.6;
+      margin-bottom: 36px;
+    }
+
+    .btn-play-heroic {
+      display: inline-flex;
+      align-items: center;
+      gap: 14px;
+      background: linear-gradient(135deg, #622D45, #D94689);
+      color: #FFFFFF;
+      text-decoration: none;
+      padding: 18px 44px;
+      border-radius: 999px;
+      font-size: 1rem;
+      font-weight: 700;
+      letter-spacing: 0.15em;
+      text-transform: uppercase;
+      box-shadow: 0 10px 30px rgba(217, 70, 137, 0.4);
+      transition: transform 0.25s ease, box-shadow 0.25s ease;
+    }
+
+    .btn-play-heroic:hover {
+      transform: translateY(-3px) scale(1.02);
+      box-shadow: 0 16px 40px rgba(217, 70, 137, 0.6);
+    }
+
+    /* Indicador Flutuante de Lâmina no Canto Inferior Direito */
+    .deck-indicator {
+      position: fixed;
+      bottom: 24px;
+      right: 24px;
+      z-index: 1000;
+      background: rgba(14, 3, 10, 0.85);
+      border: 1px solid rgba(255, 255, 255, 0.15);
+      border-radius: 999px;
+      padding: 8px 18px;
+      font-size: 0.75rem;
+      letter-spacing: 0.15em;
+      text-transform: uppercase;
+      color: #C18B9D;
+      font-family: monospace;
+      backdrop-filter: blur(10px);
+    }
+
+    @media (max-width: 900px) {
+      .panel-1-characters-art {
+        max-width: 85vw;
+        height: 65vh;
+        opacity: 0.65;
+      }
+      .panel-header-grid {
+        grid-template-columns: repeat(2, 1fr);
+      }
+      .statement-split-desc {
+        grid-template-columns: 1fr;
+        gap: 20px;
+      }
+      .students-cards-deck {
+        grid-template-columns: 1fr;
+      }
+    }
+  </style>
+</head>
+<body>
+
+  <!-- Navegação Minimalista S/C Style -->
+  <header class="sc-header">
+    <div class="sc-brand">
+      <span>REBECCA’S MYSTERY</span>
+      <span class="sc-brand-sub">/ ACADEMIA SAINT CLAIRE</span>
+    </div>
+    <nav class="sc-nav-links">
+      <a href="#painel-1" class="sc-nav-link">Início</a>
+      <a href="#painel-2" class="sc-nav-link">Manifesto</a>
+      <a href="#painel-3" class="sc-nav-link">Dossiês</a>
+      <a href="https://rebeccasmystery.vercel.app/" target="_blank" rel="noopener noreferrer" class="sc-btn-play">
+        Jogar ↗
+      </a>
+      <a href="index.html" class="sc-nav-link" style="color: #C18B9D;">← Voltar à Wiki</a>
+    </nav>
+  </header>
+
+  <!-- Indicador Discreto de Lâmina Atual -->
+  <div class="deck-indicator" id="deck-status">LÂMINA 01 / 04</div>
+
+  <!-- CONTAINER DOS PAINÉIS EMPILHADOS (STACKING PANELS) -->
+  <div class="stack-container">
+
+    <!-- ======================================================================
+         PAINEL 01: HERO COM AS ALUNAS EM TELA CHEIA
+         ====================================================================== -->
+    <section class="panel panel-1" id="painel-1">
+      <div class="panel-1-bg-img"></div>
+      
+      <!-- As 6 Personagens em Escala Real e Sem Caixa de Card -->
+      <img src="assets/images/characters/six_characters_hero.png" 
+           alt="Alunas da Academia Saint Claire" 
+           class="panel-1-characters-art">
+
+      <div class="hero-meta-row">
+        <span class="meta-tag">ARQUIVO SC-104 &bull; <span>ESTUDO DE CASO</span></span>
+        <span class="meta-tag">OUTONO DE 1928 / TEMPO PRESENTE</span>
+      </div>
+
+      <div class="hero-lead-headline">
+        <h1>O Silêncio Tem Rostos.</h1>
+        <p>
+          Em Saint Claire, a reputação é forjada em sussurros nos corredores. Três semanas no passado para quebrar o ciclo que condenou Melissa Brooks.
+        </p>
+      </div>
+
+      <div class="hero-footer-hint">
+        <div class="scroll-cta">
+          <span class="scroll-arrow-anim">↓</span>
+          <span>Role o scroll para sobrepor os painéis</span>
+        </div>
+        <span class="meta-tag">BIANCA AMORIM &bull; EXPERIÊNCIA NARRATIVA</span>
+      </div>
+    </section>
+
+    <!-- ======================================================================
+         PAINEL 02: O MANIFESTO EDITORIAL (SOBREPÕE O PAINEL 01)
+         ====================================================================== -->
+    <section class="panel panel-2" id="painel-2">
+      <div class="panel-header-grid">
+        <div class="column-header-item">
+          <span class="col-num">01</span>
+          <span class="col-title">O JULGAMENTO</span>
+        </div>
+        <div class="column-header-item">
+          <span class="col-num">02</span>
+          <span class="col-title">ANTES DO SINAL</span>
+        </div>
+        <div class="column-header-item">
+          <span class="col-num">03</span>
+          <span class="col-title">CONIVÊNCIA</span>
+        </div>
+        <div class="column-header-item">
+          <span class="col-num">04</span>
+          <span class="col-title">A CONSEQUÊNCIA</span>
+        </div>
+      </div>
+
+      <div class="huge-statement-content">
+        <h2 class="statement-title">
+          AS PESSOAS JULGAM ANTES DE PERGUNTAR.
+        </h2>
+        <div class="statement-split-desc">
+          <p>
+            Elas percebem o isolamento, a ordem, o tom das risadas e o peso do silêncio muito antes de entenderem a verdade. Notam se uma aluna foi excluída ou se apenas se calou.
+          </p>
+          <p>
+            Rebecca’s Mystery investiga a parte silenciosa desse julgamento. O objetivo não é apenas desvendar quem mentiu, mas perceber como o bullying sutil destrói laços em uma comunidade fechada.
+          </p>
+        </div>
+      </div>
+
+      <div class="hero-footer-hint">
+        <span class="meta-tag">SEÇÃO 02 / INVESTIGAÇÃO PSICOLÓGICA</span>
+        <span class="meta-tag">ROLE PARA VER A PRÓXIMA LÂMINA ↓</span>
+      </div>
+    </section>
+
+    <!-- ======================================================================
+         PAINEL 03: OS TRÊS EIXOS DE CONFLITO (SOBREPÕE O PAINEL 02)
+         ====================================================================== -->
+    <section class="panel panel-3" id="painel-3">
+      <div class="hero-meta-row">
+        <span class="meta-tag">DOSSIÊS CONFIDENCIAIS &bull; <span>TURMA 3º B</span></span>
+        <span class="meta-tag">REGISTROS INTERNOS</span>
+      </div>
+
+      <div class="students-cards-deck">
+        <div class="student-card">
+          <span class="student-card-tag">A PROTAGONISTA</span>
+          <h3>Rebecca Miller</h3>
+          <p>
+            Acordou no início do ciclo temporal. Cada diálogo que escolhe redefine a confiança das colegas e pode evitar a tragédia antes da noite de gala.
+          </p>
+        </div>
+
+        <div class="student-card">
+          <span class="student-card-tag">O EPICENTRO</span>
+          <h3>Melissa Brooks</h3>
+          <p>
+            Alvo de bilhetes anônimos e segredos distorcidos. O silêncio que a cercou nos últimos dias é o enigma central da Academia.
+          </p>
+        </div>
+
+        <div class="student-card">
+          <span class="student-card-tag">A INFLUÊNCIA</span>
+          <h3>Amanda & Chloé</h3>
+          <p>
+            Liderança acadêmica e hierarquia social. Para quem detém o poder de ditar o que é aceito, a verdade é apenas uma questão de conveniência.
+          </p>
+        </div>
+      </div>
+
+      <div class="hero-footer-hint">
+        <span class="meta-tag">SEÇÃO 03 / RELAÇÕES SOCIAIS</span>
+        <span class="meta-tag">ROLE PARA O DESFECHO ↓</span>
+      </div>
+    </section>
+
+    <!-- ======================================================================
+         PAINEL 04: ACESSO AO JOGO (SOBREPÕE O PAINEL 03)
+         ====================================================================== -->
+    <section class="panel panel-4" id="painel-4">
+      <div class="hero-meta-row" style="width: 100%;">
+        <span class="meta-tag">ACESSO OFICIAL &bull; <span>BUILD COMPLETA</span></span>
+        <span class="meta-tag">PROJETO PARALELO DISPONÍVEL</span>
+      </div>
+
+      <div class="play-final-box">
+        <h2>Adentre Saint Claire.</h2>
+        <p>
+          Suas decisões moldam o destino de Rebecca e a coragem de romper o silêncio. Jogue agora diretamente na versão interativa.
+        </p>
+        <a href="https://rebeccasmystery.vercel.app/" target="_blank" rel="noopener noreferrer" class="btn-play-heroic">
+          <span>Jogar Rebecca’s Mystery</span> ▶
+        </a>
+      </div>
+
+      <div class="hero-footer-hint" style="width: 100%;">
+        <span class="meta-tag">&copy; 2026 REBECCA'S MYSTERY &bull; BIANCA AMORIM</span>
+        <a href="index.html" class="sc-nav-link" style="color: #D94689;">← Voltar para a Wiki Principal</a>
+      </div>
+    </section>
+
+  </div>
+
+  <!-- Script Leve de Telemetria das Lâminas -->
+  <script>
+    (function() {
+      const panels = [
+        document.getElementById("painel-1"),
+        document.getElementById("painel-2"),
+        document.getElementById("painel-3"),
+        document.getElementById("painel-4")
+      ];
+      const indicator = document.getElementById("deck-status");
+
+      window.addEventListener("scroll", () => {
+        const scrollY = window.pageYOffset || document.documentElement.scrollTop;
+        const windowHeight = window.innerHeight;
+        
+        let activeIdx = 0;
+        panels.forEach((p, idx) => {
+          if (p) {
+            const rect = p.getBoundingClientRect();
+            // Se o topo do painel estiver visível ou colado no topo
+            if (rect.top <= 20) {
+              activeIdx = idx;
+            }
+          }
+        });
+
+        if (indicator) {
+          indicator.textContent = `LÂMINA 0${activeIdx + 1} / 04`;
+        }
+      }, { passive: true });
+    })();
+  </script>
+</body>
+</html>
