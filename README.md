@@ -5,13 +5,6 @@ Site wiki oficial, moderno, cinematográfico e totalmente responsivo do jogo nar
 - 📖 **Wiki Oficial:** [https://rebeccas-mystery-wiki.vercel.app/](https://rebeccas-mystery-wiki.vercel.app/)
 - 🎮 **Jogo Oficial (Projeto Paralelo):** [https://rebeccasmystery.vercel.app/](https://rebeccasmystery.vercel.app/)
 
-### 🧪 Laboratório de Modelos Parallax Horizontal
-Para comparar e testar as propostas interativas de transição horizontal:
-- **Modelo 1:** [Dual Drift (Scroll Horizontal)](demo-parallax-1.html) — O scroll vertical abre lateralmente a coluna de textos para a esquerda e o portal para a direita.
-- **Modelo 2:** [3D Cursor Depth (Mouse Horizontal)](demo-parallax-2.html) — O movimento do mouse confere profundidade tridimensional física e rotação nas alunas.
-- **Modelo 3:** [Híbrido Cinematográfico](demo-parallax-3.html) — Fusão completa dos eixos (Scroll Drift + Mouse 3D Depth).
-- **Modelo 4:** [Pinned Pan Track](demo-parallax-4.html) — Esteira horizontal panorâmica das alunas conduzida pelo scroll.
-
 ---
 
 ## 🎨 Identidade Visual e Paleta Oficial
